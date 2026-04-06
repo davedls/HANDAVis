@@ -1,0 +1,977 @@
+.auth-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.logo-animation-container {
+    position: relative;
+    display: grid;
+    place-items: center; 
+    width: 100%;
+    /* Added height to prevent clipping the map at the bottom */
+    min-height: 450px; 
+    margin-bottom: 20px;
+    overflow: visible;
+}
+
+
+
+
+.auth-logo {
+    grid-area: 1 / 1;
+    width: 280px;
+    z-index: 5;
+    position: relative;
+    
+    /* REMOVE THIS LINE IF IT EXISTS: filter: drop-shadow(...) */
+    filter: none !important; 
+    
+    transform: translateY(50px);
+    animation: logo-breath 6s infinite ease-in-out;
+}
+
+/* Blinking Dots Styling */
+.blinking-dot {
+  position: absolute;
+  width: 15px; /* Increased size for better visibility */
+  height: 15px;
+  border-radius: 50%;
+  animation: blink-glow 3s infinite ease-in-out;
+	
+	z-index: 10;
+}
+
+/* Individual Colors & Glows */
+/* ALL dots now use 'top' and 'left' to ensure they stay inside the shield body */
+
+.red-dot {
+  background: #ff4d4d;
+  box-shadow: 0 0 15px 5px rgba(255, 77, 77, 0.6);
+  top: 20%; /* Upper section */
+  left: 40%;
+  animation-delay: 0s;
+}
+
+.green-dot {
+  background: #45f074;
+  box-shadow: 0 0 15px 5px rgba(69, 240, 116, 0.6);
+  top: 35%; /* Slightly higher than red */
+  left: 20%;
+  animation-delay: 0.7s;
+}
+
+.yellow-dot {
+  background: #ffeb3b;
+  box-shadow: 0 0 15px 5px rgba(255, 235, 59, 0.6);
+  top: 80%; /* Compressed upward (previously was 70%+) */
+  left: 75%;
+  animation-delay: 1.4s;
+}
+
+.orange-dot {
+  background: #ff9800;
+  box-shadow: 0 0 15px 5px rgba(255, 152, 0, 0.6);
+  top: 60%; /* Compressed upward */
+  left: 80%;
+  animation-delay: 2.1s;
+}
+/* Slow Pulse & Glow Animation */
+@keyframes blink-glow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1.2);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+    filter: brightness(0.8);
+  }
+}  .auth-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: rgba(2, 8, 15, .68);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: .28s ease;
+  z-index: 3000;
+  overflow: hidden; /* Keep the background static */
+}
+
+.auth-modal.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+    .auth-dialog {
+  width: min(100%, 980px);
+  max-height: min(92vh, 860px);
+  display: grid;
+  grid-template-columns: 1fr 1.02fr;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, .10);
+  background: 
+    radial-gradient(circle at top right, rgba(79, 216, 255, .08), transparent 32%),
+    linear-gradient(180deg, rgba(15, 22, 33, .96), rgba(8, 13, 21, .98));
+  box-shadow: 0 28px 70px rgba(0,0,0,.42);
+  position: relative;
+  overflow: hidden; /* CRITICAL: This stops the "double frame" */
+}
+
+    .auth-dialog::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(125deg, rgba(79,216,255,.28), transparent 30%, rgba(99,166,255,.18) 70%, transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: .9;
+  z-index: 5;
+}
+
+    
+   
+    .auth-left{
+      padding:34px;
+      border-right:1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(79,216,255,.12), transparent 24%),
+        radial-gradient(circle at 80% 30%, rgba(99,166,255,.10), transparent 22%),
+        linear-gradient(180deg, rgba(17,26,38,.96), rgba(10,16,25,.98));
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:600px;
+		overflow: hidden;
+		height: 100%;
+    }
+
+.auth-left::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size:32px 32px;
+      mask-image:radial-gradient(circle at center, black, transparent 86%);
+      opacity:.7;
+    }
+
+    /* Mobile landing page only: remove the upper/left visual panel in auth card */
+    .mobile-landing .auth-dialog {
+      grid-template-columns: 1fr;
+      max-width: 560px;
+      max-height: 96vh;
+      margin: 0 auto;
+    }
+
+    .mobile-landing .auth-left {
+      display: none;
+    }
+
+    .mobile-landing .auth-right {
+      height: min(760px, 88vh);
+    }
+
+    .mobile-landing .auth-modal {
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-brand{
+      position:relative;
+      z-index:1;
+    }
+
+    .auth-brand h2{
+      font-size:34px;
+      line-height:1;
+      letter-spacing:-1.5px;
+      margin-bottom:8px;
+      color:#fff;
+    }
+
+    .auth-brand p{
+      color:var(--muted);
+      line-height:1.75;
+      max-width:360px;
+    }
+
+    .auth-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:#bfefff;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      margin-bottom:16px;
+    }
+
+    .auth-points{
+      position:relative;
+      z-index:1;
+      display:grid;
+      gap:12px;
+      margin-top:24px;
+    }
+
+    .auth-point{
+      padding:16px 18px;
+      border-radius:22px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+      backdrop-filter:blur(12px);
+    }
+
+    .auth-terms-card{
+      margin-top:24px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;
+      padding:18px;
+      line-height:1.6;
+      display:block;
+    }
+
+
+    .auth-left.fixed{
+      position:sticky;
+      top:20px;
+      max-height:calc(100vh - 85px);
+      overflow:hidden;
+    }
+
+    .auth-point strong{
+      display:block;
+      font-size:15px;
+      margin-bottom:6px;
+      color:#fff;
+    }
+
+    .auth-point span{
+      color:var(--muted);
+      line-height:1.65;
+      font-size:14px;
+    }
+
+ 
+
+    
+
+    .auth-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .auth-tabs{
+      display:flex;
+      gap:8px;
+      padding:6px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(12px);
+    }
+
+    .auth-tab{
+      border:none;
+      background:transparent;
+      color:var(--muted);
+      padding:10px 16px;
+      border-radius:999px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .auth-tab.active{
+      background:linear-gradient(180deg,#223148,#161f2e);
+      color:#fff;
+      border:1px solid rgba(79,216,255,.18);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+    }
+
+    .close-btn{
+      width:42px;
+      height:42px;
+      border:none;
+      border-radius:50%;
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.09);
+      cursor:pointer;
+      font-size:18px;
+      transition:.2s ease;
+      backdrop-filter:blur(12px);
+    }
+
+    .close-btn:hover{
+      background:rgba(255,255,255,.09);
+      transform:scale(1.04);
+    }
+
+.auth-form {
+  display: none;
+  /* Ensure the form itself doesn't collapse */
+  height: auto; 
+  padding-bottom: 20px; 
+}
+
+.field input.auth-input-invalid,
+.field select.auth-input-invalid,
+.password-wrap input.auth-input-invalid {
+  border: 1px solid #ff6b6b !important;
+  background: rgba(130, 22, 32, .16) !important;
+  color: #ffe1e5 !important;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, .22) !important;
+}
+
+.field input.auth-input-invalid::placeholder,
+.password-wrap input.auth-input-invalid::placeholder {
+  color: #ffc0c8 !important;
+}
+
+.field-error {
+  margin: -2px 0 0;
+  color: #ff8f97;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.password-wrap.auth-password-invalid {
+  border-radius: 16px;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, .16);
+  animation: authErrorPulse .9s ease-in-out 0s 2;
+}
+
+.auth-form.active {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Consistent spacing between all fields */
+}
+
+.auth-auto-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 10050;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
+}
+
+.auth-auto-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.auth-auto-modal-box {
+  min-width: 260px;
+  max-width: 90vw;
+  background: #0f1b2b;
+  color: #eaf4ff;
+  border: 1px solid rgba(79, 216, 255, 0.25);
+  border-radius: 14px;
+  padding: 18px 20px;
+  text-align: center;
+  font-weight: 700;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  transform: translateY(8px) scale(0.98);
+  transition: transform 0.18s ease;
+}
+
+.auth-auto-modal.is-visible .auth-auto-modal-box {
+  transform: translateY(0) scale(1);
+}
+
+@keyframes authErrorPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(255, 107, 107, .16); }
+  50% { box-shadow: 0 0 0 5px rgba(255, 107, 107, .28); }
+}
+    @keyframes fadeUp{
+      from{
+        opacity:0;
+        transform:translateY(8px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .form-head{
+      margin-bottom:18px;
+    }
+
+    .form-head h3{
+      font-size:28px;
+      letter-spacing:-1px;
+      margin-bottom:6px;
+      color:#fff;
+    }
+
+    .form-head p{
+      color:var(--muted);
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    .form-grid{
+      display:grid;
+      gap:14px;
+    }
+
+    .form-grid.two{
+      grid-template-columns:1fr 1fr;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+    }
+
+    .field label{
+      font-size:13px;
+      color:#d9e7fa;
+      font-weight:600;
+      margin-top:10px;
+    }
+.field select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 46px;
+  cursor: pointer;
+  background-color: rgba(255,255,255,.04);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2388a0ba' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 18px;
+}
+
+/* Styling the actual dropdown list (limited support, but helps) */
+.field select option {
+  background: #0f1621; /* Match your modal background */
+  color: #fff;
+}
+    .field input,
+    .field select{
+      width:100%;
+      min-height:50px;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background-color:rgba(255,255,255,.04);
+      color:#88a0ba;
+      outline:none;
+      transition:.2s ease;
+      backdrop-filter:blur(10px);
+    }
+
+    .field input::placeholder{
+      color:#88a0ba;
+    }
+
+    .field input:focus,
+    .field select:focus{
+      border-color:rgba(79,216,255,.36);
+      box-shadow:0 0 0 4px rgba(79,216,255,.08);
+      background-color:rgba(255,255,255,.055);
+    }
+
+    select {
+  max-height: 200px;
+}
+
+  
+   .password-wrap input {
+  width: 100%;
+  padding-right: 50px !important; /* Make sure text doesn't go under the eye */
+}
+   .toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20; 
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* REMOVE FRAME STYLES */
+  background: transparent; 
+  border: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  
+  /* STYLE THE ICON */
+  color: #88a0ba; /* Match your placeholder color */
+  font-size: 18px;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.toggle-password:hover {
+  background: transparent; /* Ensure no background appears on hover */
+  color: #4fb8ff; /* Simple blue glow on the icon instead of a box */
+}
+
+.toggle-password:active {
+  transform: translateY(-50%) scale(0.9); /* Subtle click feedback */
+}
+
+    .helper-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .checkbox{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .checkbox input{
+      accent-color:#63a6ff;
+      width:16px;
+      height:16px;
+    }
+
+    .mini-link{
+      font-size:13px;
+      color:#aeeeff;
+    }
+
+   .submit-btn {
+  width: 100% !important; /* Change from 70% to 100% for better mobile/form flow */
+  margin-top: 10px;
+}
+
+    .form-note{
+      margin-top:14px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    .switch-link{
+      color:#bfefff;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .fake-divider{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin:16px 0;
+      color:#88a0ba;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+
+    .fake-divider::before,
+    .fake-divider::after{
+      content:"";
+      height:1px;
+      flex:1;
+      background:rgba(255,255,255,.08);
+    }
+
+    .social-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .social-btn{
+      min-height:48px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+      transition:.2s ease;
+      backdrop-filter:blur(10px);
+    }
+
+    .social-btn:hover{
+      background:rgba(255,255,255,.07);
+    }
+
+    @media (max-width: 1024px){
+      .cta-grid,
+      .mission-grid,
+      .auth-dialog{
+        grid-template-columns:1fr;
+      }
+
+      .auth-left{
+        min-height:auto;
+        border-right:none;
+        border-bottom:1px solid rgba(255,255,255,.08);
+      }
+
+      
+    }
+
+    @media (max-width: 850px){
+      #about .feature-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 680px){
+      .nav-wrap{
+        min-height:74px;
+        align-items:flex-start;
+        padding:14px 0;
+        flex-direction:column;
+      }
+
+      .hero{
+        padding-bottom:0;
+      }
+
+      .hero-copy{
+        padding:20px;
+      }
+
+      .hero-copy h2{
+        font-size:40px;
+      }
+
+      .section-head h3,
+      .cta-card h3{
+        font-size:28px;
+      }
+
+      .nav-links{
+        width:100%;
+      }
+
+      .auth-modal{
+        padding:12px;
+      }
+
+      .auth-dialog{
+        width:min(100%, 100%);
+        border-radius:24px;
+        max-height:94vh;
+      }
+
+      .mobile-landing .auth-dialog{
+        width:min(100%, 560px);
+        margin:0 auto;
+      }
+
+      .auth-left,
+     
+    
+      .form-grid.two{
+        grid-template-columns:1fr;
+      }
+
+      .auth-top{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .mobile-landing .auth-top{
+        align-items:center;
+      }
+
+      .auth-tabs{
+        width:100%;
+        justify-content:space-between;
+      }
+
+      .auth-tab{
+        flex:1;
+        text-align:center;
+      }
+
+      .social-row{
+        grid-template-columns:1fr;
+      }
+    }
+document.querySelectorAll('.toggle-password').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const input = document.getElementById(this.dataset.target);
+    if (input.type === 'password') {
+      input.type = 'text';
+      this.textContent = '◡'; // Or change icon class
+    } else {
+      input.type = 'password';
+      this.textContent = '👁';
+    }
+  });
+});
+.auth-dialog:has(#registerForm.active) .auth-terms-card {
+    display: block;
+    animation: fadeUp 0.3s ease forwards;
+}
+.auth-dialog::-webkit-scrollbar {
+  width: 6px;
+}
+.auth-dialog::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+.auth-right {
+  display: flex;
+  flex-direction: column;
+  height: 640px; /* Constant height to prevent jumping */
+  background: transparent;
+  overflow: hidden;
+  position: relative;
+}
+.auth-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 32px 24px; /* Padding moved here */
+}
+.auth-top {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.auth-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 32px 100px 32px; /* 100px buffer ensures button is never cut */
+  scrollbar-gutter: stable;
+}
+
+
+
+
+/* CUSTOM SCROLLBAR: Sleek and matches your glass theme */
+.auth-scroll-area::-webkit-scrollbar { width: 5px; }
+.auth-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+.auth-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.auth-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.auth-dialog::before, 
+.auth-dialog::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  /* Ensure the border gradient doesn't have a fixed height */
+  height: 100%; 
+  z-index: 2;
+}
+.blue-link {
+  color: #4fb8ff !important; /* Bright blue to pop against dark theme */
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.blue-link:hover {
+  color: #80ccff !important;
+  text-decoration: none;
+}
+
+/* Styling the inline terms container */
+.auth-terms-inline {
+  margin: 15px 0;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+.auth-terms-inline .checkbox {
+  align-items: flex-start; /* Better for multi-line text */
+}
+.auth-terms-inline .checkbox span {
+  font-size: 13px;
+  color: #dce7f8;
+  line-height: 1.4;
+}
+
+.password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.pixel-bg {
+    position: absolute; 
+    
+    /* Perfect Centering Base */
+    top: 47%;
+    left: 35%;
+    
+    /* Centering (-50%, -50%) + Downward shift (50px) */
+    /* Calculation: calc(-50% + 50px) */
+    transform: translate(-50%, calc(-50% + 50px)); 
+    
+    /* Sizing */
+    width: 200%; 
+    height: auto;
+    
+    /* Layering */
+    z-index: 1; 
+    
+    /* Esthetics */
+   /* Esthetics: 30% Opacity */
+    opacity: 0.3; 
+    pointer-events: none;
+}
+.shield-mask {
+    position: absolute;
+    width: 180px; /* Match the width of the inner shield part */
+    height: 220px; /* Match the height of the inner shield part */
+    background: #0f1621; /* Match your modal's background color exactly */
+    z-index: 2;
+    border-radius: 50% 50% 100% 100% / 30% 30% 110% 110%; /* Makes a shield-like curve */
+    filter: blur(5px); /* Softens edges so it doesn't look like a box */
+}
+
+.shield-back {
+  position: absolute;
+  /* Adjust width/height to fit the inside of your shield */
+  width: 160px; 
+  height: 200px;
+  /* Use the exact dark color of your modal background */
+  background: #0b111a; 
+  z-index: 2; /* Sits between map (1) and logo (3) */
+  border-radius: 50% 50% 100% 100% / 20% 20% 120% 120%; /* Shield shape */
+  filter: blur(2px); /* Soften the edges */
+}
+
+/* THE BREATHING ANIMATION */
+@keyframes logo-breath {
+    0%, 100% {
+        transform: translateY(50px) scale(1);
+        filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5)) brightness(1);
+    }
+    50% {
+        /* Keep the 50px offset while scaling */
+        transform: translateY(50px) scale(1.05); 
+        /* Optional: add a slight glow boost when it "inhales" */
+        filter: drop-shadow(0 20px 40px rgba(79, 216, 255, 0.3)) brightness(1.1);
+    }
+}
+/* THE ENERGY BREATH: Synced Scale + Pulsing Glow */
+@keyframes energy-breath {
+    /* STATE 1: Default (No Glow) */
+    0%, 100% {
+        transform: scale(1) translateY(0); /* Minimal movement, reset scaling */
+        /* Start with zero or a very faint ambient shadow */
+        filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+    }
+    
+    /* STATE 2: The "Inhale" (Glow peaks) */
+    50% {
+        /* Scale up 5% for the breath */
+        transform: scale(1.05) translateY(-2px); /* Slight lift as it breathes */
+        
+        /* TRIPLE-LAYER GLOW: */
+        filter: 
+            /* 1. Bright Core */
+            drop-shadow(0 0 10px rgba(79, 216, 255, 0.9)) 
+            /* 2. Soft Middle Bloom */
+            drop-shadow(0 0 25px rgba(79, 216, 255, 0.6)) 
+            /* 3. Deep Ambience */
+            drop-shadow(0 0 40px rgba(79, 216, 255, 0.3));
+    }
+}
+.radar-scan {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Keep the 50px vertical sync */
+    transform: translate(-50%, calc(-50% + 50px)) rotate(0deg); 
+    
+    /* RANGE INCREASE: 250% ensures it covers the entire 150% width map */
+    width: 250%; 
+    height: auto;
+    aspect-ratio: 1 / 1;
+    
+    background: conic-gradient(
+        from 0deg, 
+        transparent 0deg 330deg,
+        rgba(79, 216, 255, 0.1) 345deg,
+        rgba(79, 216, 255, 0.5) 358deg,
+        #ffffff 360deg
+    );
+    
+    /* MASK ADJUSTMENT: 
+       Changing 'transparent 70%' to 'transparent 95%' 
+       makes the beam reach much further out before fading. */
+    -webkit-mask: radial-gradient(circle, #fff 40%, transparent 95%);
+    mask: radial-gradient(circle, #fff 40%, transparent 95%);
+    
+    z-index: 1.5; 
+    pointer-events: none;
+    
+    /* Stronger glow for the longer beam */
+    filter: blur(5px) drop-shadow(0 0 20px rgba(79, 216, 255, 0.9));
+    
+    animation: radar-rotate 8s infinite linear;
+}
+@keyframes radar-rotate {
+    0% { transform: translate(-50%, calc(-50% + 50px)) rotate(0deg); }
+    100% { transform: translate(-50%, calc(-50% + 50px)) rotate(360deg); }
+}

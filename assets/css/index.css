@@ -1,0 +1,1588 @@
+:root{
+      --bg:#08111b;
+      --bg-2:#0d1724;
+      --surface:rgba(255,255,255,.06);
+      --surface-2:rgba(255,255,255,.04);
+      --line:rgba(255,255,255,.09);
+      --text:#f4f8ff;
+      --muted:#9fb0c7;
+      --cyan:#4fd8ff;
+      --blue:#63a6ff;
+      --red:#ff4d57;
+      --orange:#ff9a3d;
+      --green:#49d17d;
+      --shadow:0 22px 50px rgba(0,0,0,.28);
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(79,216,255,.10), transparent 22%),
+        radial-gradient(circle at 85% 20%, rgba(99,166,255,.08), transparent 18%),
+        linear-gradient(180deg, #07111b 0%, #0b1623 45%, #09121c 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size:40px 40px;
+      mask-image:radial-gradient(circle at center, black, transparent 88%);
+      z-index:-2;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(135deg, transparent 0 48%, rgba(79,216,255,.035) 49%, transparent 50% 100%);
+      background-size:320px 320px;
+      opacity:.5;
+      z-index:-1;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    button,
+    input,
+    select{
+      font:inherit;
+    }
+
+    #top{
+      position:absolute;
+      top:0;
+    }
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.logo-link:hover {
+  opacity: 0.85; /* Gives a subtle "clickable" feedback */
+  cursor: pointer;
+}
+
+.header-logo {
+  height: 60px; /* Keeping your larger size */
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(79, 216, 255, 0.25));
+  /* Ensure the image doesn't block the click */
+  pointer-events: none; 
+}
+
+    .container{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .main-header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter:blur(18px);
+      background:rgba(8, 12, 19, 0.72);
+      border-bottom:none;
+    }
+
+    .nav-wrap{
+      min-height:78px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+  .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-logo {
+  height: 60px; /* Increase this value (e.g., 65px or 70px) to make it larger */
+  width: auto;
+  object-fit: contain;
+  /* Helps the logo "pop" against the dark header */
+  filter: drop-shadow(0 0 10px rgba(79, 216, 255, 0.25)); 
+  transition: transform 0.3s ease; /* Adds a smooth feel */
+}
+
+.header-logo:hover {
+  transform: scale(1.05); /* Slight grow effect when hovering */
+}
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.brand h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.brand span {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      position:relative;
+    }
+
+    .nav-links a,
+    .nav-links button{
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
+      color:#dce7f8;
+      border:1px solid transparent;
+      transition:.2s ease;
+      background:transparent;
+      cursor:pointer;
+      position:relative;
+      z-index:1;
+    }
+
+    .nav-indicator{
+      position:absolute;
+      left:0;
+      top:0;
+      width:0;
+      height:0;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 8px 18px rgba(0,0,0,.22);
+      transition:left .24s ease, top .24s ease, width .24s ease, height .24s ease, opacity .24s ease;
+      opacity:0;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .nav-links .nav-scroll-link.active{
+      color:#ffffff;
+    }
+
+    .nav-links a:hover,
+    .nav-links button:hover{
+      background:rgba(255,255,255,.05);
+      border-color:rgba(255,255,255,.08);
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      padding:13px 18px;
+      border-radius:999px;
+      background:linear-gradient(180deg,#1d2736,#121926);
+      color:#fff;
+      font-weight:700;
+      transition:.25s ease;
+      border:1px solid rgba(79,216,255,.22);
+      box-shadow:
+        0 10px 20px rgba(0,0,0,.22),
+        inset 0 1px 0 rgba(255,255,255,.05);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      box-shadow:
+        0 14px 28px rgba(0,0,0,.28),
+        0 0 0 1px rgba(79,216,255,.18);
+    }
+
+    .btn.secondary{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:none;
+    }
+
+    .section{
+      padding:60px 0;
+      border-top:none !important;
+      background-size:cover;
+      background-position:center;
+      image-rendering:-webkit-optimize-contrast;
+      image-rendering:crisp-edges;
+    }
+
+ .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    /* Change background to transparent so the video is visible */
+    background: transparent; 
+}
+   .video-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Change z-index to 0 or 1 so it stays behind text but in front of the empty hero div */
+    z-index: 0; 
+}
+ .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Keep this at a higher z-index than the video to provide the dark tint */
+    background: rgba(8, 17, 27, 0.6); 
+    z-index: 1;
+}
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:22px;
+      align-items:stretch;
+      position:relative;
+      z-index:0;
+    }
+
+    .glass{
+      background:transparent !important;
+      border:none !important;
+      box-shadow:none !important;
+      backdrop-filter:none !important;
+    }
+
+    .glass::before{
+      display:none !important;
+    }
+
+    .hero-copy{
+      padding:34px;
+      text-align:center;
+      margin:0 auto;
+      color:#fff;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:0;
+      background:none;
+      border:none;
+      color:var(--cyan);
+      font-size:15px;
+      font-weight:700;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      margin-bottom:24px;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:8px;
+      height:2px;
+      background:var(--cyan);
+      display:inline-block;
+      border-radius:2px;
+    }
+
+    .hero-copy h2{
+      font-size:clamp(40px, 6vw, 74px);
+      line-height:.98;
+      letter-spacing:-2.4px;
+      margin-bottom:16px;
+      color:#fff;
+      max-width:720px;
+      text-shadow:0 4px 30px rgba(0,0,0,0.7);
+    }
+
+    .hero-copy h2 span{
+      background:linear-gradient(90deg, #ffffff 0%, #99eeff 45%, #63a6ff 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .hero-copy p{
+      font-size:16px;
+      line-height:1.75;
+      color:#dce7f8;
+      max-width:600px;
+      margin:0 auto;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:32px;
+      justify-content:center;
+    }
+
+    .separator{
+      width:100%;
+      line-height:0;
+      margin-top:-2px;
+      position:relative;
+      z-index:10;
+      background:#08111b;
+    }
+
+    .separator svg{
+      display:block;
+      width:100%;
+      height:80px;
+    }
+
+    .section-head{
+      margin-bottom:18px;
+      text-align:left;
+    }
+
+    .section-head h3 {
+    font-family: 'Inter', sans-serif; /* Ensures the font is applied */
+    font-weight: 600;                 /* 600 is the standard value for Semi Bold */
+    font-size: 30px;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+    .section-head p{
+      max-width:760px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .mission-grid,
+    .feature-grid,
+    .cta-grid{
+      display:grid;
+      gap:18px;
+    }
+
+    .mission-grid{
+      grid-template-columns:repeat(2, minmax(0,1fr));
+    }
+
+    .cta-grid{
+      display:grid;
+      grid-template-columns:1.4fr 1fr;
+      gap:40px;
+      align-items:center;
+    }
+
+    .card{
+      padding:24px;
+      border-radius:28px;
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));
+      backdrop-filter:blur(16px);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+      transition:.25s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:
+        0 24px 50px rgba(0,0,0,.34),
+        0 0 0 1px rgba(79,216,255,.10);
+    }
+
+    .card::after{
+      content:"";
+      position:absolute;
+      right:-28px;
+      top:-28px;
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(79,216,255,.12), transparent 70%);
+      pointer-events:none;
+    }
+
+    .card h4{
+      font-size:22px;
+      letter-spacing:-.7px;
+      margin-bottom:10px;
+      color:#fff;
+    }
+
+    .card p{
+      font-size:15px;
+      line-height:1.75;
+      color:var(--muted);
+    }
+
+    .feature-icon{
+      width:54px;
+      height:54px;
+      display:grid;
+      place-items:center;
+      font-size:24px;
+      border-radius:18px;
+      margin-bottom:14px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      text-shadow:0 0 15px rgba(79,216,255,0.5);
+    }
+
+    #about{
+      background:
+        linear-gradient(rgba(8, 17, 27, 0.85), rgba(8, 17, 27, 0.95)),
+        url('../../images/westvis.jpg');
+      background-size:cover;
+      background-position:center;
+      background-attachment:fixed;
+      position:relative;
+      padding-top:80px;
+      padding-bottom:20px;
+      min-height:auto;
+      border-top:none;
+    }
+
+    #about .feature-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:30px;
+      margin-top:50px;
+      max-width:1000px;
+      margin-inline:auto;
+    }
+
+    #about .card{
+      padding:40px;
+      min-height:280px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      background:rgba(13, 23, 36, 0.75);
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255, 255, 255, 0.12);
+      border-radius:32px;
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #about .card:hover{
+      transform:translateY(-8px);
+      background:rgba(13, 23, 36, 0.85);
+      box-shadow:0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    #about .card h4{
+      font-size:26px;
+      margin-bottom:15px;
+      letter-spacing:-0.5px;
+    }
+
+    #about .card p{
+      font-size:17px;
+      line-height:1.6;
+    }
+
+    #mission{
+      background:
+        linear-gradient(180deg, rgba(8, 17, 27, 0.9) 0%, rgba(18, 10, 10, 0.8) 100%),
+       url('../../images/red1.jpeg');
+      background-size:cover;
+      background-position:center;
+      background-attachment:fixed;
+      padding:60px 0;
+      position:relative;
+      border-top:1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    #mission h3,
+   #mission p {
+    color: #ffffff; /* Explicitly set to pure white */
+    text-shadow: rgba(0, 0, 0, 0.8) 0px 2px 15px;
+    font-family: 'Inter', sans-serif; /* Ensures consistency with your other headings */
+}
+
+    #features{
+      background:
+        linear-gradient(180deg, rgba(8, 17, 27, 0.85) 0%, rgba(13, 31, 45, 0.9) 100%),
+        url('../../images/123.jpg');
+      background-size:cover;
+      background-position:center;
+      background-attachment:fixed;
+      padding:80px 0;
+      position:relative;
+    }
+
+    #features .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+      gap:40px;
+      text-align:left;
+    }
+
+    #features .card{
+      background:transparent !important;
+      border:none !important;
+      backdrop-filter:none !important;
+      padding:20px 0 !important;
+      text-align:left;
+      box-shadow:none !important;
+    }
+
+    #features .feature-icon{
+      margin-left:0 !important;
+      margin-right:auto !important;
+      font-size:2rem;
+      margin-bottom:15px;
+    }
+
+    #features .section-head{
+      text-align:left !important;
+      margin-left:0;
+      margin-bottom:40px;
+    }
+
+    #features .section-head p{
+      margin-left:0 !important;
+    }
+
+    #features h4{
+      font-size:22px;
+      color:var(--cyan);
+      margin-bottom:12px;
+      position:relative;
+      display:inline-block;
+    }
+
+    #features h4::after{
+      content:"";
+      display:block;
+      width:30px;
+      height:2px;
+      background:var(--cyan);
+      margin-top:8px;
+    }
+
+    #features .card:hover{
+      background:rgba(255, 255, 255, 0.1);
+      transform:translateY(-5px);
+      border-color:var(--cyan);
+    }
+
+ #map {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  padding: 100px 0;
+  background-color: #050a0f; /* Dark space base */
+  overflow: hidden;
+  z-index: 0;
+}  #map h3{
+      text-shadow:0 4px 20px rgba(0, 0, 0, 0.9);
+      color:#fff;
+    }
+
+    #map p{
+      color:#dce7f8;
+      text-shadow:0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+ .map-preview {
+    min-height: 500px;
+    position: relative;
+    backdrop-filter: blur(12px);
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 30px 60px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    
+    background: 
+        /* 1. Grid (Top) */
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px) 0% 0% / 36px 36px, 
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) 0% 0% / 36px 36px, 
+        
+        /* 2. Your Colored Glows */
+       
+        
+        /* 3. YOUR MAP (40% Size and Centered) */
+        url('../../images/vis.png') no-repeat center center / 40%, 
+        
+        /* 4. Base Background Color (Bottom) */
+        linear-gradient(rgb(15, 23, 36), rgb(10, 17, 27));
+
+    overflow: hidden;
+}
+    .map-preview::before{
+      content:"WESTERN VISAYAS RISK VIEW";
+      position:absolute;
+      left:18px;
+      top:16px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      font-size:12px;
+      letter-spacing:1px;
+      font-weight:700;
+      color:#dff6ff;
+    }
+
+    .map-dot{
+      position:absolute;
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      box-shadow:0 0 0 0 rgba(79,216,255,.55);
+      animation:pulse 1.8s infinite;
+    }
+
+    .map-dot.red{ background:var(--red); }
+    .map-dot.cyan{ background:var(--cyan); }
+    .map-dot.green{ background:var(--green); }
+    .map-dot.orange{ background:var(--orange); }
+
+    @keyframes pulse{
+      0%{ box-shadow:0 0 0 0 rgba(79,216,255,.45); }
+      100%{ box-shadow:0 0 0 18px rgba(79,216,255,0); }
+    }
+
+ 
+
+    #cta .glass,
+    #cta .card{
+      background:rgba(255, 255, 255, 0.03);
+      backdrop-filter:blur(15px);
+      -webkit-backdrop-filter:blur(15px);
+      border:1px solid rgba(255, 255, 255, 0.1);
+      border-radius:24px;
+      padding:40px;
+      box-shadow:0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    #cta h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600; /* Sets it to Semi Bold */
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+    #cta h3 span{
+      padding:4px 12px;
+      box-decoration-break:clone;
+      -webkit-box-decoration-break:clone;
+    }
+
+    .cta-card{
+      padding:30px;
+      min-height:240px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .cta-card p{
+      color:#dce7f8;
+      line-height:1.75;
+      max-width:620px;
+      font-size:1.1rem;
+      margin-bottom:24px;
+    }
+
+  
+/* --- CTA Section Fix --- */
+#cta {
+  position: relative;
+  padding: 120px 0;
+  /* overflow: hidden;  <-- REMOVE OR COMMENT THIS OUT */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8, 17, 27, 0.9) 0%,
+      rgba(13, 31, 45, 0.8) 50%,
+      #08111b 100% /* Made this solid hex to match footer */
+    ),
+    url('../../images/rescue.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  transform: translateZ(0);
+}
+
+/* This creates a 10px invisible "anchor" that bridges the gap */
+#cta::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: #08111b; /* Matches footer exactly */
+  z-index: -1;
+}
+
+.footer {
+  position: relative;
+  z-index: 10;
+  margin-top: 0 !important;
+  background: #08111b;
+  padding: 0 0 48px;
+}
+.footer-wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding-top: 38px;
+}/* Adjust the container to handle the extra column */
+.footer-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    gap: 40px !important;
+}
+
+.footer-logo-img {
+    /* Increased height to match the 'red line' (title + 2 lines of text) */
+    height: 100px; 
+    width: auto;
+    object-fit: contain;
+    /* Optional: adjust this if the logo sits too high or low */
+    margin-top: 2px; 
+}
+
+.footer-brand h2 {
+    font-size: 26px; /* Slightly larger to match the bigger logo */
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 6px 0; /* Space between title and description */
+    line-height: 1.1;
+}
+
+.footer-brand p {
+    font-size: 14px;
+    line-height: 1.5; /* This controls the 'stretch' of the red line */
+    color: var(--muted);
+    margin: 0;
+    max-width: 290px;
+}
+/* Ensure the footer spans full width on the landing page */
+.main-footer {
+    width: 100% !important;
+    background: rgba(8, 17, 27, 0.98) !important; /* Matches your index theme */
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 60px 0;
+    margin-top: 0;
+}
+
+/* Fix for the Landing Page container constraints */
+.main-footer .footer-container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important; /* Allows wrapping on smaller mobile screens */
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    max-width: 1200px !important; /* Standard landing page width */
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+    gap: 40px !important;
+}
+
+/* Ensure branding group stays together on Index */
+.brand-area {
+    flex: 1.5 !important;
+    min-width: 300px;
+}
+
+/* Fix link colors for Index (since index.css might have different defaults) */
+.footer-links a {
+    color: var(--muted) !important;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--cyan) !important;
+}
+/* Target the correct class from your user_footer.php */
+.footer-logo-main {
+    height: 80px !important; /* Adjust this to your preferred size */
+    width: auto !important;
+    max-width: 150px;
+    object-fit: contain;
+    
+    /* Adds the signature HANDAVis glow to the logo */
+    filter: drop-shadow(0 0 12px rgba(79, 216, 255, 0.3));
+    
+    /* Prevents the logo from shrinking when the window is small */
+    flex-shrink: 0; 
+    
+    /* Vertical alignment fix */
+    align-self: flex-start;
+    margin-top: 5px;
+}
+
+/* Ensure the flex container doesn't squash the image */
+.footer-brand-flex {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+/* Example Light Mode Colors - Adjust these to fit HANDAVis */
+body.light-mode {
+    background-color: #ffffff;
+    color: #1a1a1a;
+}
+
+body.light-mode .main-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+}
+
+body.light-mode .card {
+    background-color: #f1f1f1;
+    color: #333;
+}
+/* --- Full-Section Mission & Vision Divider --- */
+@media (min-width: 769px) {
+  #mission {
+    position: relative;
+    overflow: hidden; /* Prevents the diagonal line from poking out of the section */
+  }
+
+  /* We use a pseudo-element on the section itself to reach the edges */
+  #mission::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--cyan) 15%,
+      var(--blue) 50%,
+      var(--cyan) 85%,
+      transparent 100%
+    );
+    /* -20deg gives a sharper slice; adjust as needed */
+    transform: translateX(-50%) skewX(-20deg);
+    box-shadow: 0 0 20px rgba(79, 216, 255, 0.3);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Ensure the grid is above the line for hover effects */
+  .mission-grid {
+    position: relative;
+    z-index: 2;
+    gap: 100px; /* Extra gap so the line doesn't overlap text */
+  }
+}/* --- Refined Layout with Descriptions --- */
+@media (min-width: 769px) {
+    #mission {
+        position: relative;
+        min-height: 400px; /* Increased height to accommodate the extra text */
+        overflow: hidden;
+    }
+
+    .mission-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-height: 400px;
+    }
+
+    /* Common Title Styling */
+    .big-text {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(70px, 8vw, 90px); /* Slightly smaller to fit the section better */
+        font-weight: 800; /* Thinner weight */
+        color: #ffffff;
+        line-height: 1;
+        letter-spacing: -6px;
+        margin: 0;
+        text-transform: uppercase;
+    }
+
+    /* Description Text Styling */
+    .mission-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: #ffffff; /* Explicit white for clarity */
+    max-width: 500px; 
+    margin: 0;
+}
+
+    /* Top Left Alignment */
+    .mission-title-group {
+        position: absolute;
+        top: 20px;
+        left: 30px;
+        text-align: left;
+    }
+    .mission-title-group .mission-desc {
+        margin-top: 15px; /* Space below MISSION */
+    }
+
+    /* Bottom Right Alignment */
+    .vision-title-group {
+        position: absolute;
+        bottom: 20px;
+        right: 30px;
+        text-align: right;
+    }
+    .vision-title-group .mission-desc {
+        margin-bottom: 15px; /* Space above VISION */
+        margin-left: auto; /* Keeps the text block aligned to the right */
+    }
+}
+
+/* Mobile Fallback */
+@media (max-width: 768px) {
+    .mission-title-group, .vision-title-group {
+        padding: 40px 20px;
+        text-align: center;
+    }
+    .mission-desc {
+        margin: 15px auto;
+    }
+}
+/* --- Scroll Animation Styles --- */
+@media (min-width: 769px) {
+    .scroll-animate {
+        opacity: 0;
+        transform: translateY(50px); /* Start lower */
+        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                    opacity 0.8s ease;
+        pointer-events: none; /* Prevent interaction while hidden */
+    }
+
+    /* When the JS adds this class, it rises up */
+    .scroll-animate.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+}
+/* --- Background Logo Layout --- */
+@media (min-width: 769px) {
+    #mission {
+        position: relative;
+        min-height: 550px;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #0a0a0a; /* Fallback dark background */
+    }
+
+    /* Create a layer for icons.png behind the text */
+    #mission::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('images/icons.png');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 700px; /* Adjust this to make the logo bigger or smaller */
+        opacity: 0.4; /* Makes the logo subtle so text remains readable */
+        z-index: 1; /* Sits at the bottom */
+    }
+
+    .mission-wrapper {
+        position: relative;
+        z-index: 2; /* Pushes text above the logo */
+        width: 100%;
+        max-width: 1400px;
+        height: 100%;
+        min-height: 400px;
+    }
+
+    /* MISSION - Top Left */
+    .mission-text-group {
+        position: absolute;
+        top: 40px;
+        left: 60px;
+        text-align: left;
+        max-width: 450px;
+    }
+
+    /* VISION - Bottom Right */
+    .vision-text-group {
+        position: absolute;
+        bottom: 40px;
+        right: 60px;
+        text-align: right;
+        max-width: 450px;
+    }
+
+    /* Typography */
+    .big-text {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(60px, 10vw, 110px);
+        font-weight: 800;
+        color: #ffffff;
+        line-height: 0.9;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
+
+    .mission-desc {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+    }
+}
+/* --- CSS Rocket Icon (Watermark Style) --- */
+.mission-text-group {
+    position: absolute; /* Keep your original positioning */
+    z-index: 10;
+}
+
+.rocket-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    width: 100%; 
+    height: 530px; /* Increased to fill more of the 550px section */
+    opacity: 0.3; 
+    z-index: -1;   
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.r-body {
+    position: relative;
+    width: 112px; /* Was 80px (+40%) */
+    height: 252px; /* Was 180px (+40%) */
+    background-color: #d1d1d1; 
+    border-radius: 50% 50% 15% 15%;
+}
+
+.r-window {
+    position: absolute;
+    top: 56px; /* Adjusted for larger body */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35px; /* Was 25px */
+    height: 35px; /* Was 25px */
+    background-color: #222;
+    border-radius: 50%;
+    border: 4px solid #d1d1d1;
+}
+
+.r-fin {
+    position: absolute;
+    bottom: 0;
+    width: 56px; /* Was 40px */
+    height: 98px; /* Was 70px */
+    background-color: #b0b0b0; 
+    z-index: -1;
+}
+
+.r-fin-l {
+    left: -35px; /* Adjusted for wider body */
+    border-radius: 100% 0 0 0;
+    transform: skewY(-15deg);
+}
+
+.r-fin-r {
+    right: -35px; /* Adjusted for wider body */
+    border-radius: 0 100% 0 0;
+    transform: skewY(15deg);
+}
+/* --- Rocket Flame Styling --- */
+.r-flame {
+    position: absolute;
+    bottom: 0; /* Positioned at the base of the rocket body */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 120px;
+    
+    /* Cyan to transparent gradient to match your slash */
+    background: linear-gradient(to bottom, 
+        rgba(0, 255, 255, 0.8) 0%, 
+        rgba(0, 255, 255, 0.3) 50%, 
+        transparent 100%);
+    
+    border-radius: 0 0 50% 50%; /* Rounded flame tail */
+    filter: blur(10px); /* Softens the flame against the background */
+    z-index: -2; /* Sits behind the rocket body and fins */
+    
+    /* Subtle flicker animation */
+    animation: flicker 0.2s infinite alternate;
+}
+
+/* Optional: Inner core of the flame for more detail */
+.r-flame::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 60px;
+    background: white;
+    filter: blur(5px);
+    border-radius: 0 0 50% 50%;
+    opacity: 0.5;
+}
+
+@keyframes flicker {
+    0% { height: 110px; opacity: 0.7; }
+    100% { height: 130px; opacity: 0.9; }
+}
+
+/* Ensure the rocket body remains opaque enough to hide the flame's top edge */
+.r-body {
+    position: relative;
+    z-index: 1; 
+}
+/* --- Stylized Eye Icon (Monitoring Watermark) --- */
+.eye-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 530px; /* Matching the Rocket's massive scale */
+    opacity: 0.3; /* 30% transparency */
+    z-index: -1;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Outer Lens / Eye Shape */
+.eye-outer {
+    position: relative;
+    width: 350px; /* Massive width */
+    height: 200px;
+    background-color: transparent;
+    border: 8px solid #d1d1d1;
+    border-radius: 100% 0; /* Creates the almond shape */
+    transform: rotate(0deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* The Iris */
+.eye-iris {
+    width: 140px;
+    height: 140px;
+    background-color: #b0b0b0;
+    border: 4px solid #d1d1d1;
+    border-radius: 50%;
+    position: relative;
+    transform: rotate(0deg); /* Counter-rotate to stay upright */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The Pupil */
+.eye-pupil {
+    width: 50px;
+    height: 50px;
+    background-color: #222;
+    border-radius: 50%;
+}
+
+/* Tech Shutter Lines */
+.eye-shutter {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: repeating-conic-gradient(
+        from 0deg,
+        transparent 0deg 30deg,
+        rgba(255,255,255,0.1) 31deg 60deg
+    );
+}
+
+/* --- SCAN LINE (The "Flame" / Glow equivalent) --- */
+.eye-scan-line {
+    position: absolute;
+    width: 450px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ffffff, transparent);
+    box-shadow: 0 0 15px #ffffff;
+    z-index: 2;
+    animation: scan 3s infinite ease-in-out;
+}
+
+@keyframes scan {
+    0% { transform: translateY(-100px); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(100px); opacity: 0; }
+}
+@media (min-width: 769px) {
+    .features-diagonal-container {
+        display: flex;
+        width: 100%;
+        height: 600px;
+        overflow: hidden;
+        background: #000;
+        /* No gap here ensures the images touch pixel-to-pixel */
+        gap: 0; 
+    }
+
+    .split-part {
+        flex: 1; /* Forces exactly 33.33% width for each */
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+        transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        /* CRITICAL: Remove these to make it straight */
+        clip-path: none !important;
+        margin: 0 !important;
+    }
+
+    /* --- Backgrounds with correct HelioHost paths --- */
+    .part-1 {
+        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                          url('../../images/purok.jpg');
+    }
+
+    .part-2 {
+        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                          url('../../images/tena.jpg');
+        /* Subtle vertical lines to define the sections */
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .part-3 {
+        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                          url('../../images/safe.jpg');
+    }
+
+    /* --- Hover Effect --- */
+    .split-part:hover {
+        flex: 1.5; /* Grows the section smoothly */
+    }
+
+    /* Keep images assigned during hover */
+    .part-1:hover { background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('../../images/purok.jpg'); }
+    .part-2:hover { background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('../../images/tena.jpg'); }
+    .part-3:hover { background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('../../images/safe.jpg'); }
+
+   .split-content {
+        color: white;
+        text-align: center;
+        z-index: 10;
+        width: 100%;
+        max-width: 450px; /* Limits the frame width */
+        padding: 40px 30px;
+        
+       
+    }
+
+    /* Heading: Risk Mapping, Live Monitoring, Preparedness */
+   .split-content h3 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        font-size: 2.8rem;
+        text-transform: uppercase;
+        letter-spacing: -2px;
+        margin-bottom: 25px;
+        color: var(--cyan);
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    }
+    /* Description Text */
+  @media (min-width: 769px) {
+    .split-content p {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.15rem; /* Slightly increased for better scanning */
+        font-weight: 500;    /* Changed from 400 to 500 for better "cut-through" on images */
+        line-height: 1.7;    /* Increased breathing room between lines */
+        color: #ffffff;      /* Pure white for maximum contrast */
+        
+        /* INCREASED OPACITY: Changed from 0.04 to 0.25 to create a solid "plate" for text */
+        background: rgba(0, 0, 0, 0.25); 
+        
+        /* STRONGER BLUR: Makes the background image less distracting */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        
+        padding: 30px 35px;
+        border-radius: 16px;
+        
+        /* BORDER: Slightly more visible to define the box edges */
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        
+        /* SHADOW: Deepened the shadow to lift the box off the background */
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        
+        max-width: 420px;
+        margin: 0 auto;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Subtle text shadow for extra "pop" */
+        transition: all 0.4s ease;
+    }
+}
+	/* Apply this to all three parts to keep them uniform */
+.split-content p:hover {
+    background: rgba(0, 0, 0, 0.4); /* Subtle darkening on hover */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Brighter border edge */
+    transform: translateY(-5px); /* Gentle lift */
+    
+    /* Uniform shadow that doesn't feel "heavy" */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    
+    /* Ensure the blur remains consistent */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+    /* Hover State for Text */
+  .split-part:hover .split-content p {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(79, 216, 255, 0.3); /* Subtle cyan glow */
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+    .split-part:hover .split-content h3 {
+        color: #ffffff;
+    }
+}
+#map {
+  position: relative;
+  overflow: hidden; 
+  /* Your existing styles (background-image, padding, etc.) */
+  z-index: 0; /* Establishes a stacking context */
+}
+
+/* The Radar Pulse - Now set to -1 to stay behind content */
+#map::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 255, 100, 0.05), /* Very faint green */
+    transparent
+  );
+  animation: scan-roll 6s infinite linear;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Ensure the map preview and text are definitely on top */
+#map .container {
+  position: relative;
+  z-index: 2; 
+}
+
+@keyframes sonar-expand {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+#map::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: url('../../images/ph.svg') no-repeat center;
+  background-size: cover;
+  opacity: 0.3;
+  z-index: -2;
+  /* Switched to a subtle jitter + brightness spike */
+  animation: active-feed 15s infinite;
+}
+.radar-sweep {
+  position: absolute;
+  top: 40%; 
+  left: 50%;
+  width: 400%; 
+  height: 400%;
+  
+  /* DENSE MULTI-LAYER GRADIENT:
+     1. A wide, soft trail (0deg to 270deg)
+     2. A thick, glowing leading edge (270deg to 360deg)
+  */
+  background: 
+    /* The Center Glow (Core of the scanner) */
+    radial-gradient(circle at center, rgba(0, 180, 255, 0.15) 0%, transparent 15%),
+    /* The Dense Beam */
+    conic-gradient(
+      from 0deg,
+      transparent 200deg,            /* Start the fade-in much earlier */
+      rgba(0, 80, 255, 0.05) 260deg,  /* Deep blue "afterglow" */
+      rgba(0, 150, 255, 0.2) 330deg,  /* Thick blue body */
+      rgba(100, 220, 255, 0.4) 360deg /* Bright, sharp leading edge */
+    );
+
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  
+  /* Slightly slower rotation (10s) makes the density feel "heavier" */
+  animation: radar-rotate 10s infinite linear;
+  
+  pointer-events: none;
+  z-index: 2;
+  
+  /* Adds a slight blur to the edges for a "light-leak" look */
+  filter: blur(1px);
+}
+
+@keyframes radar-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* --- THE UI DATA OVERLAY --- */
+.ui-overlay {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-family: 'Courier New', monospace;
+  color: rgba(0, 255, 100, 0.7);
+  font-size: 10px;
+  text-align: right;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ui-overlay .status {
+  animation: blink 1s infinite steps(1);
+}
+
+
+/* Simulate a "Data Refresh" spike every 15 seconds */
+@keyframes active-feed {
+  0%, 94%, 100% { filter: brightness(1) contrast(1); transform: scale(1); }
+  95% { filter: brightness(2) contrast(1.5); transform: scale(1.01) translateX(2px); }
+  96% { filter: brightness(1) contrast(1); transform: scale(1) translateX(-2px); }
+  97% { filter: brightness(1.5); transform: scale(1); }
+}
+
+/* UI Blinking Text */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.radar-hub {
+  position: absolute;
+  /* EXACT SAME ALIGNMENT */
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  /* DOT SIZE */
+  width: 8px;
+  height: 8px;
+  background-color: #64dcff; /* Bright Blue */
+  border-radius: 50%;
+  
+  /* EFFECTS */
+  z-index: 4; /* Sits above the sweep and LCD */
+  box-shadow: 0 0 15px #00b4ff, 0 0 30px #00b4ff;
+  
+  /* Subtle Pulse Animation */
+  animation: hub-pulse 2s infinite ease-in-out;
+  pointer-events: none;
+}
+
+/* --- THE BLIP ANIMATION --- */
+@keyframes hub-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    filter: brightness(1);
+    box-shadow: 0 0 15px #00b4ff;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3);
+    filter: brightness(1.5);
+    box-shadow: 0 0 25px #00b4ff, 0 0 10px white;
+  }
+}
+.hero-video {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}

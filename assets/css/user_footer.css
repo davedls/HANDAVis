@@ -1,0 +1,179 @@
+.icon-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.icon-group a {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+.icon-group img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.icon-group a:hover {
+  transform: translateY(-3px);
+  border-color: #4fd8ff;
+  background: rgba(79, 216, 255, 0.1);
+}
+
+/* ============================================================
+   USER FOOTER ALIGNMENT & THEME
+   ============================================================ */
+.main-footer {
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--line);
+  padding: 60px 24px 30px;
+  position: relative;
+  z-index: 1000;
+  margin-top: 0;
+  color: var(--text);
+  grid-column: 2;
+  grid-row: 2;
+}
+
+/* Ensure the container inside the footer doesn't add extra space */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+}
+
+.footer-section h2 {
+  font-size: 28px;
+  color: #4fd8ff;
+  margin-bottom: 15px;
+}
+
+.footer-section h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #63a6ff;
+  margin-bottom: 20px;
+}
+
+.footer-brand p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #4fd8ff;
+}
+
+body.light-mode .footer-brand p,
+body.light-mode .footer-links a,
+body.light-mode .main-footer .footer-section a {
+  color: #163149;
+}
+
+body.light-mode .footer-links a:hover,
+body.light-mode .main-footer .footer-section a:hover {
+  color: #0f6ea8;
+}
+
+body.light-mode .icon-group a {
+  background: rgba(242,247,252,.85);
+  border-color: rgba(54,99,145,.14);
+}
+
+@media (max-width: 940px) {
+  .main-footer {
+    grid-column: 1;
+    grid-row: 3;
+    padding: 40px 18px 24px;
+  }
+}
+/* --- LIGHT MODE MODAL --- */
+
+/* Changes the dark blue background to white/light-gray */
+body.light-mode .modal-content {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+    color: #2d3436 !important; /* Dark text for readability */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 0 15px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid #e0e0e0 !important;
+}
+body.light-mode .modal-body p {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: black;
+}
+
+/* Adjust the 'X' close button color */
+body.light-mode .close-btn {
+    color: #636e72 !important;
+}
+
+/* Adjust the 'No' button to look like a light ghost button */
+body.light-mode .btn-no {
+    background: #f1f2f6 !important;
+    color: #2f3542 !important;
+    border: 1px solid #dfe4ea !important;
+}
+
+/* Keep the 'Yes' button red, but maybe a slightly softer version for light mode */
+body.light-mode .btn-yes {
+    background: #ff4757 !important;
+    box-shadow: 0 4px 10px rgba(255, 71, 87, 0.2);
+}
+
+.VIpgJd-yAWNEb-L7lbkb,
+.VIpgJd-yAWNEb-nVMfcd-fmcmS, 
+.VIpgJd-yAWNEb-yAWNEb-Vy2Aqc-pbTTYe,
+.VIpgJd-yAWNEb-hvhgNd,
+.VIpgJd-yAWNEb-hvhgNd-axAV1,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-text-highlight,
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  position: static !important;
+  -webkit-box-sizing: border-box !important;
+  box-sizing: border-box !important;
+}

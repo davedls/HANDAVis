@@ -1,0 +1,183 @@
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+  transition:           none !important;
+  animation:            none !important;
+  animation-duration:   0s  !important;
+  animation-delay:      0s  !important;
+}
+
+html.reduce-motion {
+  scroll-behavior: auto !important;
+}
+
+html.reduce-motion .btn:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .panel:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .metric-card:hover,
+html.reduce-motion .metric-card {
+  transform: none !important;
+  filter:    none !important;
+}
+
+html.reduce-motion #dashboardPage .metrics .panel.metric-card:hover .card-image {
+  transform: none  !important;
+  opacity:   0.3   !important;
+  filter:    brightness(0) invert(0.7) !important;
+}
+
+html.reduce-motion .pagasa-day:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .pagasa-icon-bubble {
+  transition: none !important;
+}
+
+html.reduce-motion .qa-card:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .status-card:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .tag:hover {
+  box-shadow: none !important;
+}
+
+html.reduce-motion .back-btn:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .btn-primary:hover {
+  transform: none !important;
+}
+
+html.reduce-motion #dashboardPage .metrics .panel.metric-card.alert-accent:hover,
+html.reduce-motion #dashboardPage .metrics .panel.metric-card.centers-accent:hover,
+html.reduce-motion #dashboardPage .metrics .panel.metric-card.reports-accent:hover,
+html.reduce-motion #dashboardPage .metrics .panel.metric-card.weather-accent:hover {
+  background-image: none !important;
+  transition:       none !important;
+}
+
+html.reduce-motion .logo-link,
+html.reduce-motion .sidebar-logo-hero {
+  transition: none !important;
+}
+
+html.reduce-motion .logo-link:hover .sidebar-logo-hero,
+html.reduce-motion .logo-link:active .sidebar-logo-hero {
+  transform: scale(1.45) !important;
+  filter: drop-shadow(0 0 22px rgba(79, 216, 255, 0.4)) !important;
+}
+
+html.reduce-motion .sub-link {
+  transition: none !important;
+}
+
+html.reduce-motion .sub-link:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .sub-link svg {
+  transition: none !important;
+}
+
+html.reduce-motion .shield-outline-rotating {
+  animation:          none !important;
+  stroke-dashoffset:  0    !important;
+}
+
+html.reduce-motion .hazard-card,
+html.reduce-motion .hazard-card::before {
+  transition: none !important;
+}
+
+html.reduce-motion .hazard-card:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .hazard-card.active {
+  transform: none !important;
+}
+
+html.reduce-motion .report-input,
+html.reduce-motion .report-textarea {
+  transition: none !important;
+}
+
+html.reduce-motion .mini-action-btn {
+  transition: none !important;
+}
+
+html.reduce-motion .mini-action-btn:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .detail-chip {
+  transition: none !important;
+}
+
+html.reduce-motion .duplicate-btn {
+  transition: none !important;
+}
+
+html.reduce-motion .action-tile {
+  transition: none !important;
+}
+
+html.reduce-motion .submit-report-btn {
+  transition: none !important;
+}
+
+html.reduce-motion .submit-report-btn:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .verification-card {
+  transition: none !important;
+}
+
+html.reduce-motion .verification-card.is-highlighted {
+  transform: none !important;
+}
+
+html.reduce-motion .verify-btn {
+  transition: none !important;
+}
+
+html.reduce-motion .toast {
+  transition: none !important;
+  transform: none !important;
+}
+
+html.reduce-motion .toast.show {
+  transform: none !important;
+}
+
+html.reduce-motion .scope-filter-btn {
+  transition: none !important;
+}
+
+html.reduce-motion .filter-btn {
+  transition: none !important;
+}
+
+html.reduce-motion .video-card {
+  transition: none !important;
+}
+
+html.reduce-motion .video-card:hover {
+  transform: none !important;
+}
+
+html.reduce-motion .play-overlay {
+  transition: none !important;
+}

@@ -1,0 +1,1138 @@
+/* ============================================================
+   1. GLOBAL RESET & CORE THEME
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+:root {
+    --bg-dark: #101521;
+    --emerald: #00ff88;
+    --blue-bright: #00d2ff;
+    --blue-deep: #3a86ff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --glass-bg: rgba(10, 11, 13, 0.85);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-dark);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+/* ============================================================
+   2. FIXED TACTICAL HEADER
+   ============================================================ */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999; /* Ensure priority over video and overlays */
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 12px 0;
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; /* Keeps Logo left, Actions right */
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo-section { display: flex; align-items: center; gap: 12px; }
+.header-logo { height: 40px; width: auto; }
+
+.logo-text h1 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logo-text h1 span { color: var(--blue-bright); }
+
+.logo-text p {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+/* ============================================================
+   3. HERO SECTION (VIDEO & BRIGHT BLUE SHADE)
+   ============================================================ */
+.hero-full {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 80px; 
+    overflow: hidden;
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: -2;
+}
+
+/* The Bright Blue Shade Layer */
+.hero-full::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Electric Blue Gradient with Screen Blend */
+    background: linear-gradient(135deg, rgba(10, 11, 13, 0.9) 0%, rgba(0, 210, 255, 0.3) 100%);
+    backdrop-filter: blur(8px) brightness(0.7);
+    -webkit-backdrop-filter: blur(8px) brightness(0.7);
+    z-index: -1;
+}
+
+.hero-tagline {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--blue-bright);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    line-height: 0.9; 
+    margin: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    /* FIX 1: Ensure the container doesn't chop letters */
+    overflow: visible !important; 
+}
+
+/* --- Branding: HANDAVis --- */
+.branding-main {
+    display: block;
+    font-size: clamp(4rem, 15vw, 8.5rem); 
+    background: linear-gradient(to right, #4A90E2 0%, #FFFFFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* FIX 2: Add slight horizontal padding so the 'S' or 'H' isn't clipped */
+    padding: 0 0.1em; 
+    letter-spacing: -5px;
+    margin-bottom: 5px;
+}
+
+/* --- Catchphrase Lines --- */
+.catch-top, 
+.catch-bottom {
+    display: block;
+    font-size: clamp(2.5rem, 10vw, 5.5rem); 
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    
+    /* FIX 3: Same padding fix here for 'Stay' and 'See' */
+    padding: 0 0.1em;
+    
+    line-height: 1.0;
+    letter-spacing: -3px;
+    text-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.catch-bottom {
+    margin-top: -5px;
+}
+
+.hero-title span {
+    background: linear-gradient(to right, #ffffff, var(--blue-deep));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* ============================================================
+   4. TACTICAL BUTTONS
+   ============================================================ */
+.hero-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+
+.btn {
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-solid {
+    background-color: #121826;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-outline {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================
+   5. DATA STREAM (MOBILE APP PREVIEW) - FIXES CHOPPING
+   ============================================================ */
+.data-stream-section {
+    width: 100% !important;
+    padding: 80px 0 !important;
+    background: linear-gradient(180deg, #050608 0%, #0a111e 45%, #1a2a44 100%);
+    overflow: hidden;
+}
+.briefing-intel {
+    width: 90%;
+    max-width: 800px;
+    margin-bottom: 50px;
+}
+/* --- The Photo (The Image itself) --- */
+.briefing-visual {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+.stream-visual {
+    /* Since you cropped it tight, 90% will now look massive */
+    width: 90% !important; 
+    max-width: 1100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    /* 1. TRULY CENTERED: Remove all tilts and offsets */
+    transform: none !important; 
+    transition: all 0.4s ease-in-out;
+    
+    /* 2. THE OUTER GLOW: Cyan-Blue Tactical Aura */
+    /* We use two layers: one tight/bright, one wide/soft */
+    /* Keeps the UI text sharp */
+    image-rendering: -webkit-optimize-contrast; 
+}
+/* TABLET/DESKTOP TWEAK */
+@media (min-width: 769px) {
+    .stream-visual {
+        width: 80% !important; /* Don't want it touching edges on monitors */
+    }
+}
+
+/* Optional: Slight lift when the user looks at it */
+.stream-visual:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* ============================================================
+   6. RESPONSIVE NAVIGATION & HAMBURGER
+   ============================================================ */
+
+/* Desktop State */
+@media (min-width: 769px) {
+    .header-actions { display: flex; align-items: center; gap: 30px; }
+    .nav-menu { display: flex; gap: 20px; }
+    .nav-link {
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+    .nav-link:hover, .nav-link.active { color: white; }
+    .menu-toggle { display: none; }
+    
+    .nav-login-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        padding: 10px 25px;
+        border-radius: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+        font-weight: 700;
+        cursor: pointer;
+    }
+}
+
+/* Mobile State */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 14px;
+        gap: 10px;
+    }
+
+    .logo-text h1 {
+        font-size: 1.1rem;
+    }
+
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+        z-index: 10001; /* Above mobile menu */
+    }
+
+    .menu-toggle span {
+        width: 25px;
+        height: 2px;
+        background: white;
+        transition: 0.3s;
+    }
+
+    /* Hamburger Animation to X */
+    .menu-toggle.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle.is-active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Hidden on right side */
+        width: min(88vw, 360px);
+        height: 100vh;
+        padding: 88px 18px 24px;
+        background: rgba(13, 14, 18, 0.98);
+        backdrop-filter: blur(20px);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 6px;
+        transition: 0.4s ease-in-out;
+        z-index: 10000;
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+        overflow-y: auto;
+    }
+
+    .nav-menu.active { right: 0; }
+
+    .nav-link {
+        font-size: 1.05rem;
+        padding: 14px 15px;
+        width: 100%;
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 14px;
+    }
+
+    .nav-login-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+        padding: 14px 15px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(79, 216, 255, 0.12);
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .hero-content,
+    .briefing-intel,
+    .landing-briefing {
+        width: min(100%, calc(100% - 24px));
+    }
+
+    .hero-description {
+        font-size: 0.98rem;
+        padding: 0 8px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        width: min(100%, 320px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+    }
+}
+
+/* SEPARATORS */
+.sep-horizontal {
+    height: 1px;
+    background: var(--emerald);
+    width: 100%;
+    opacity: 0.2;
+}
+.intel-container {
+    display: flex !important;
+    flex-direction: column !important; /* Forces image below text */
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important; /* Removes the "box" restriction */
+    padding: 0 !important;      /* Removes side squeezing */
+    margin: 0 auto;
+}
+
+.intel-header .tag {
+    color: var(--blue-bright);
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+}
+
+.intel-grid {
+    display: flex;
+    flex-wrap: wrap; /* Put cards side-by-side on desktop */
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+.intel-card {
+    flex: 1 1 300px; /* Let cards sit next to each other */
+    max-width: 400px;
+    padding: 15px;
+}
+
+.intel-card:hover {
+    border-color: var(--blue-bright);
+    background: rgba(0, 210, 255, 0.05);
+}
+
+.intel-card h3 {
+    font-size: 0.9rem;
+    color: var(--blue-bright);
+    margin-bottom: 10px;
+}
+
+.intel-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+@media (max-width: 768px) {
+    .nav-menu.active {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 80px; /* Space for the 'X' button */
+    }
+
+    /* This creates the space and adds the handav.png at the top */
+    .nav-menu.active::before {
+        content: "";
+        display: block;
+        width: 220px;   /* Was 150px */
+        height: 220px;
+        background: url('../../images/handav.png') no-repeat center;
+        background-size: contain;
+        margin-bottom: 40px; /* Space before 'About' starts */
+        filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.4));
+    }
+}
+/* --- THE MAIN EMERGENCY SECTION --- */
+.node {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
+    overflow: hidden;
+    
+    /* REMOVED RED: Solid Deep Dark Background */
+    background-color: #0a0b0d; 
+    
+    /* KEEP GRID: Tactical Grid Overlay */
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+
+    /* Borders: Changed to a subtle dark cyan or kept black for a clean look */
+    border-top: 1px solid rgba(0, 210, 255, 0.2); 
+    border-bottom: 2px solid #000;
+}
+
+/* REMOVED SCANLINES: We delete or comment out the ::after block */
+.node::after {
+    display: none; 
+}
+
+/* --- TACTICAL BRIEFING SECTION --- */
+.landing-briefing {
+    position: relative;
+    z-index: 2; /* Sits above scanlines */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto 40px auto;
+    font-family: 'Inter', sans-serif; 
+    color: #FFFFFF;
+}
+.node-main-header {
+    grid-column: 1 / -1; 
+    
+    /* SWAPPED TO MONOSPACE */
+    font-family: 'Courier New', Courier, monospace; 
+    
+    font-size: 1.6rem;
+    font-weight: 700; /* Monospace usually looks best at 700 weight */
+    color: #FFFFFF;
+    text-transform: uppercase;
+    
+    /* Increased letter spacing for that wide 'Command Center' look */
+    letter-spacing: 6px; 
+    
+    margin-bottom: 50px;
+    text-align: center;
+    position: relative;
+    
+    /* Optional: Add a subtle text glow */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.brief-item h3 {
+    font-size: 1.25rem;
+    color: #00d2ff; 
+    text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    /* Red lines removed per your previous request */
+    border-left: none; 
+    padding-left: 0;
+}
+
+.brief-item p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.75);
+    text-align: left;
+}
+
+/* --- THE MAP IMAGE CONTAINER --- */
+.emergency-node-visual {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: visible !important;
+}
+/* THE LASER LINE - Positioned between the two images */
+.glow-laser-barrier {
+    position: relative;
+    
+    /* 1. Force the line to be exactly as wide as the screen */
+    width: 100vw; 
+    height: 3px;
+    background: #00d2ff;
+
+    /* 2. THE FIX: Center it relative to the screen, not the parent box */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* 3. Ensure no margin interferes */
+    margin: 0; 
+    
+    z-index: 10;
+
+    /* 4. Visual Glow */
+    box-shadow: 
+        0 0 15px #00d2ff,
+        0 0 30px rgba(0, 210, 255, 0.6),
+        0 0 45px rgba(0, 210, 255, 0.3);
+}
+
+/* 5. IMPORTANT: Parents must not clip the 'overflow' */
+.strategic-content-wrapper, 
+.emergency-node-visual 
+ {
+    overflow: visible !important;
+}
+@media (min-width: 1024px) {
+    .glow-laser-barrier {
+        height: 3px; /* Slightly thicker for desktop visibility */
+        /* Optional: add a subtle pulse animation */
+        animation: pulseGlow 3s infinite ease-in-out;
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.8; box-shadow: 0 0 15px #00d2ff; }
+    50% { opacity: 1; box-shadow: 0 0 30px #00d2ff; }
+}
+/* THE CHOPPED PHONES BELOW THE LINE */
+.strategic-phones-viewer {
+    width: 100%;
+    max-width: 900px;
+    height: 300px; /* Adjust based on how much of the phones you want shown */
+    background-image: url('images/image_d48549.png');
+    background-size: contain;
+    background-position: top center;
+    background-repeat: no-repeat;
+    
+    /* Push it up slightly to ensure no gap with the laser line */
+    margin-top: -1px; 
+}
+.node-visual {
+    width: 90%; 
+    max-width: 1000px; 
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 0 30px rgba(255, 68, 68, 0.3));
+    /* SHARPNESS FIX */
+    image-rendering: -webkit-optimize-contrast;
+    transition: transform 0.3s ease;
+}
+.node-visual {
+    margin-bottom: 0 !important;
+    display: block;
+}
+.node-visual:hover {
+    transform: scale(1.02);
+}
+
+/* --- DESKTOP VIEW --- */
+@media (min-width: 1024px) {
+    .node {
+        min-height: 800px;
+    }
+    .landing-briefing {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 60px;
+        margin-bottom: 80px;
+    }
+}
+/* --- UNIQUE STRATEGIC VIEW SECTION (NO GRID) --- */
+.node-strategic-view {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 0;
+    overflow: hidden;
+
+    /* 1. DARK BLUE TO BLACK GRADIENT */
+    background: linear-gradient(180deg, #001a33 0%, #000000 70%) !important;
+    
+    /* 2. FORCE REMOVE GRID */
+    /* This stops the .node grid from showing up here */
+    background-image: none !important; 
+    background-size: auto !important;
+
+    /* Clean Borders */
+    border-top: 1px solid rgba(0, 210, 255, 0.3);
+    border-bottom: 2px solid #000;
+}
+
+/* Ensure the image remains the focus */
+.node-strategic-view .node-visual {
+    width: 90%; 
+    max-width: 1000px; 
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 0 40px rgba(0, 210, 255, 0.35));
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.node-strategic-view .node-visual:hover {
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 50px rgba(0, 210, 255, 0.5));
+}
+.node-strategic-view::after {
+    display: none !important;
+}
+
+/* Desktop Adjustment */
+@media (min-width: 1024px) {
+    .node-strategic-view {
+        min-height: 850px;
+    }
+}
+/* --- STRATEGIC STATUS HEADER (INTER SEMI BOLD) --- */
+.strategic-status-header {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto 30px auto;
+    text-align: center;
+}
+
+.status-title {
+    /* INTER SEMI BOLD */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600; /* Semi Bold */
+    
+    color: #FFFFFF;
+    
+    /* Clean line height for readability */
+    line-height: 1.3;
+    
+    /* CYAN MEDIUM GLOW */
+    /* Focuses the glow tighter around the semi-bold characters */
+    text-shadow: 
+        0 0 10px rgba(0, 210, 255, 0.5),
+        0 0 20px rgba(0, 210, 255, 0.2);
+    
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Ensure the image aligns with the new font weight */
+.node-strategic-view .node-visual {
+    width: 90%; 
+    max-width: 1000px; 
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 40px rgba(0, 210, 255, 0.3));
+    image-rendering: -webkit-optimize-contrast;
+}
+
+/* Desktop Adjustment */
+@media (min-width: 1024px) {
+    .strategic-status-header {
+        text-align: left;
+        margin-bottom: 40px;
+    }
+    .status-title {
+        font-size: 1.5rem;
+        letter-spacing: 3px;
+    }
+}
+/* --- UNIQUE SHELTER SCRIBBLE SECTION --- */
+.node-shelter-scribble {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 0;
+    overflow: visible !important;
+    
+    /* PURE BLACK BACKGROUND */
+    background-color: #000000;
+
+    /* NEON SCRIBBLE EFFECT */
+    /* We use a complex repeating linear gradient to simulate 'scratched' neon lines */
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 50px,
+            rgba(0, 210, 255, 0.05) 50px,
+            rgba(0, 210, 255, 0.05) 51px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 70px,
+            rgba(255, 0, 255, 0.05) 70px,
+            rgba(255, 0, 255, 0.05) 71px
+        ),
+        repeating-linear-gradient(
+            110deg,
+            transparent,
+            transparent 120px,
+            rgba(57, 255, 20, 0.05) 120px,
+            rgba(57, 255, 20, 0.05) 121px
+        );
+    
+    
+}
+.node-shelter-scribble {
+    background-color: #000000 !important; 
+    border-bottom: none !important; /* Removes the 5px solid black wall */
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    position: relative;
+    z-index: 1;
+}
+/* Make the image look like it's glowing in the dark */
+.node-shelter-scribble .node-visual {
+    width: 85%;
+    max-width: 950px;
+    height: auto;
+    display: block;
+    
+    /* Neon 'Glitch' Glow */
+    filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.4)) 
+            drop-shadow(0 0 40px rgba(255, 0, 255, 0.2));
+            
+    image-rendering: -webkit-optimize-contrast;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.node-shelter-scribble .node-visual:hover {
+    /* Resets the scale/tilt effect */
+    transform: none !important; 
+    
+    /* Keeps the glow static so it doesn't "jump" or intensify on hover */
+    filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.4)) 
+            drop-shadow(0 0 40px rgba(255, 0, 255, 0.2)) !important;
+}
+/* Desktop Adjustment */
+@media (min-width: 1024px) {
+    .node-shelter-scribble {
+        min-height: 800px;
+    }
+}
+/* --- CAPTION STYLING FOR SCRIBBLE SECTION --- */
+.strategic-status-header {
+    text-align: center;
+    margin-bottom: 40px; /* Space between text and image */
+}
+
+.status-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600; /* Semi Bold */
+    color: #FFFFFF;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    
+    /* THE CYAN MEDIUM GLOW */
+    text-shadow: 
+        0 0 10px rgba(0, 210, 255, 0.6),
+        0 0 20px rgba(0, 210, 255, 0.3);
+    
+    font-size: 1.2rem;
+}
+
+/* THE THIRD SENTENCE: EXTRA POLISH */
+.status-subline {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    text-transform: none; /* Keeps it as a sentence for better flow */
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 8px rgba(0, 210, 255, 0.4);
+}
+
+/* --- NEON SCRIBBLE IMAGE ADJUSTMENT --- */
+.node-shelter-scribble .node-visual {
+    width: 85%;
+    max-width: 950px;
+    filter: drop-shadow(0 0 30px rgba(0, 210, 255, 0.4));
+    image-rendering: -webkit-optimize-contrast;
+	transition: none !important;
+}
+
+/* Desktop Alignment */
+@media (min-width: 1024px) {
+    .strategic-status-header {
+        text-align: left;
+    }
+    .status-title {
+        font-size: 1.6rem;
+    }
+}
+/* --- AI INTELLIGENCE SECTION (TEXT ABOVE) --- */
+.node-ai-intelligence-clean {
+    background-color: #000000;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Reduced top padding to move everything up */
+    padding: 60px 0 0 0; 
+    overflow: hidden;
+}
+
+/* THE HEADER: Positioned on the black space */
+.ai-header-top {
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+    margin-bottom: 40px; /* Space before the laser line starts */
+}
+
+.ai-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    font-size: 1.5rem;
+    text-shadow: 0 0 15px rgba(0, 210, 255, 0.7);
+    margin-bottom: 12px;
+}
+
+.ai-subline {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+}
+
+/* --- THE SCANNER VISUALS --- */
+
+
+
+.node-visual-scan {
+    width: 100%;
+    max-width: 950px;
+    height: auto;
+    display: block;
+    /* Pull the image up so there is NO gap under the laser line */
+    margin-top: -1px; 
+    image-rendering: -webkit-optimize-contrast;
+}
+
+/* Desktop Adjustment */
+@media (min-width: 1024px) {
+    .ai-header-top {
+        text-align: left;
+        width: 100%;
+        max-width: 1000px;
+        margin-left: 5%;
+    }
+}
+
+.node-ai-intelligence-fade .strategic-content-wrapper {
+    max-width: 1200px; /* Keep your content centered */
+    margin: 0 auto;
+    background: transparent; /* Make sure this isn't blocking the image */
+}
+
+/* THE HEADER */
+.ai-header-fade {
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+    margin-bottom: 30px; 
+}
+
+.ai-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    font-size: 1.5rem;
+    text-shadow: 0 0 15px rgba(0, 210, 255, 0.7);
+    margin-bottom: 12px;
+}
+
+.ai-subline {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+/* --- THE FADE-OUT MASK --- */
+.ai-visual-container-fade {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    /* THE FADE EFFECT: 
+       This keeps the top 70% solid and fades the last 30% to transparent */
+    -webkit-mask-image: linear-gradient(to bottom, 
+        black 0%, 
+        black 70%, 
+        transparent 100%
+    );
+    mask-image: linear-gradient(to bottom, 
+        black 0%, 
+        black 70%, 
+        transparent 100%
+    );
+}
+
+.node-visual-static {
+    width: 100%;
+    max-width: 950px;
+    height: auto;
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+/* Desktop Adjustment */
+@media (min-width: 1024px) {
+    .ai-header-fade {
+        text-align: left;
+        width: 100%;
+        max-width: 1000px;
+        margin-left: 5%;
+    }
+}
+/* --- AI INTELLIGENCE SECTION (OVERLAY STYLE) --- */
+/* --- AI INTELLIGENCE SECTION (ETHEREAL GRADIENT STYLE) --- */
+.node-ai-intelligence-fade {
+    /* 1. Pull the section UP by 2px to hide the gap */
+    margin-top: -2px !important; 
+    
+    /* 2. Ensure it sits 'under' the glowing line's section */
+    position: relative;
+    z-index: 5;
+
+    /* 3. Your Ethereal Gradient (Start it at the very top) */
+    background: radial-gradient(circle at 50% 0%, 
+        #ffffff 0%, 
+        #f0f4f8 40%, 
+        #dbe2ee 100%
+    );
+
+    /* 4. Keep your padding so text doesn't hit the line */
+    padding-top: 80px; 
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* 3. Text Contrast Fix (Since the background is now light) */
+.node-ai-intelligence-fade .status-title,
+.node-ai-intelligence-fade .status-subline {
+    color: #1a1c20 !important; /* Dark text for readability on light BG */
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+}
+
+/* 4. The Mobile Overlay (The Top Layer) */
+.node-visual-fade-in {
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+    display: block;
+    margin-top: 50px;
+    
+    /* Stronger shadow to pop against the light background */
+    filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.3))
+            drop-shadow(0 0 20px rgba(0, 210, 255, 0.1));
+
+    /* Fades the top of the phone into the white glow */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
+}
+/* THE HEADER */
+.ai-header-top {
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+    margin-bottom: 40px; 
+}
+
+.ai-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    font-size: 1.5rem;
+    text-shadow: 0 0 15px rgba(0, 210, 255, 0.7);
+    margin-bottom: 12px;
+}
+
+.ai-subline {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+}
+
+/* --- THE FADE-IN IMAGE EFFECT --- */
+.ai-visual-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+
+
+/* Desktop Adjustment */
+@media (min-width: 1024px) {
+    .ai-header-top {
+        text-align: left;
+        width: 100%;
+        max-width: 1000px;
+        margin-left: 5%;
+    }
+}
+/* --- MOBILE-ONLY GAP OVERRIDE --- */
+/* --- MOBILE-ONLY GAP OVERRIDE (FINAL FIX) --- */
+@media (max-width: 768px) {
+    /* 1. Kill the inherited black border and grid from the .node class */
+    .node-shelter-scribble {
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+        border-bottom: none !important; /* Forces the 2px black border to vanish */
+        background-image: none !important; /* Stops the grid from bleeding down */
+        min-height: auto !important; /* Prevents empty space below the map */
+    }
+
+    /* 2. Force the AI section to 'swallow' the seam */
+    .node-ai-intelligence-fade {
+        margin-top: -5px !important; /* More aggressive pull-up for mobile */
+        position: relative;
+        z-index: 99; /* Ensures the white BG is on top of any stray black pixels */
+        background: #ffffff !important; /* Solid white starting point */
+        border-top: none !important;
+    }
+
+    /* 3. Eliminate hidden space below the map image */
+    .emergency-node-visual {
+        line-height: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .node-visual {
+        margin-bottom: 0 !important;
+        display: block; /* Removes the 3px font-descender gap */
+    }
+}

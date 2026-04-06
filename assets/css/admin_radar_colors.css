@@ -1,0 +1,62 @@
+#adminPage #adminRadar .radar{
+  background:
+    radial-gradient(circle at center, transparent 24%, #efeff1 24.6%, transparent 25.2%, transparent 39%, #efeff1 39.6%, transparent 40.2%, transparent 54%, #efeff1 54.6%, transparent 55.2%, transparent 69%, #efeff1 69.6%, transparent 70.2%),
+    linear-gradient(90deg, transparent 49.6%, #efeff1 49.6%, #efeff1 50.4%, transparent 50.4%),
+    linear-gradient(transparent 49.6%, #efeff1 49.6%, #efeff1 50.4%, transparent 50.4%),
+    linear-gradient(180deg,#fff,#fafafa);
+}
+
+#adminPage #adminRadar .radar::after{
+  background:conic-gradient(from 270deg,
+    rgba(6,182,212,.03) 0deg,
+    rgba(6,182,212,.08) 9deg,
+    rgba(6,182,212,.16) 18deg,
+    rgba(6,182,212,.24) 27deg,
+    rgba(6,182,212,.34) 36deg,
+    rgba(6,182,212,.45) 42deg,
+    rgba(6,182,212,.55) 46deg,
+    transparent 54deg,
+    transparent 360deg
+  );
+  filter:blur(1px);
+}
+
+#adminPage #adminRadar .radar-core{
+  background:#fff;
+  border:1px solid var(--line);
+  color:#111;
+}
+
+#adminPage #adminRadar .radar-core strong{
+  color:#111;
+}
+
+#adminPage #adminRadar .radar-tag-flood,
+#adminPage #adminRadar .radar-tag-storm,
+#adminPage #adminRadar .radar-tag-reports,
+#adminPage #adminRadar .radar-tag-capacity{
+  border:1px solid var(--line);
+  background:#fff;
+  box-shadow:0 10px 24px rgba(17,17,17,.07);
+  color:#333;
+}
+
+#adminPage #adminRadar .radar-tag-flood.radar-hit{
+  box-shadow:0 10px 24px rgba(17,17,17,.07),0 0 12px rgba(255,191,0,.55);
+  background:rgba(255,191,0,.12);
+}
+
+#adminPage #adminRadar .radar-tag-storm.radar-hit{
+  box-shadow:0 10px 24px rgba(17,17,17,.07),0 0 12px rgba(220,38,38,.45);
+  background:rgba(220,38,38,.12);
+}
+
+#adminPage #adminRadar .radar-tag-reports.radar-hit{
+  box-shadow:0 10px 24px rgba(17,17,17,.07),0 0 12px rgba(34,197,94,.5);
+  background:rgba(34,197,94,.12);
+}
+
+#adminPage #adminRadar .radar-tag-capacity.radar-hit{
+  box-shadow:0 10px 24px rgba(17,17,17,.07),0 0 12px rgba(59,130,246,.45);
+  background:rgba(59,130,246,.12);
+}

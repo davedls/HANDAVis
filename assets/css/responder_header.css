@@ -1,0 +1,43 @@
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.page-head h1{
+  font-size:38px;
+  letter-spacing:-1.6px;
+  margin-bottom:8px;
+}
+
+.page-head p{
+  max-width:860px;
+  color:var(--muted);
+  line-height:1.65;
+}
+
+.topbar-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:#444;
+  font-size:13px;
+  font-weight:600;
+}
+
+@media (max-width:940px){
+  .page-head h1{font-size:32px}
+}
