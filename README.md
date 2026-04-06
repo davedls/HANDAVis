@@ -18,6 +18,24 @@ The system is engineered to reduce response time, improve situational awareness,
 
 ---
 
+You can also create your own accounts as users.
+
+Accounts to access the different portals:
+
+Barangay:
+estefania@gmail.com 
+Barangay123
+
+Responders:
+joel@gmail.com
+Responder123!
+
+Admin:
+admin@handavis.local 
+Admin1234
+
+---
+
 ## 1. Objectives
 
 HANDAVIS aims to:
