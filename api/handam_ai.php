@@ -546,7 +546,7 @@ if ($message === '') {
 $apiKey = get_openai_key();
 if (!$apiKey) {
     respond([
-        'error' => 'OpenAI API key is not configured on the server. Update includes/openai_config.php with your real key.',
+        'error' => 'OpenAI API key is not configured on the server. Set OPENAI_API_KEY in the server environment or in the local gitignored includes/openai_config.php file.',
     ], 500);
 }
 
