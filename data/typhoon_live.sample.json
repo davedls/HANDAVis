@@ -1,0 +1,21 @@
+{
+  "active": true,
+  "name": "Typhoon Example",
+  "category": "Typhoon",
+  "movement": "WNW at 18 km/h",
+  "wind_kph": 155,
+  "gust_kph": 190,
+  "updated_at": "2026-03-30T12:00:00+08:00",
+  "source": "PAGASA Parsed Feed",
+  "meta": "Located east of Samar.",
+  "landfall": "Possible approach to Eastern Visayas within 24 to 36 hours.",
+  "priority": "Monitor Samar, Leyte, and Northern Cebu coastal sectors.",
+  "note": "Cone widths widen farther out to reflect uncertainty.",
+  "track": [
+    { "lat": 12.1, "lon": 128.6, "label": "Now", "cone_radius_km": 35 },
+    { "lat": 12.5, "lon": 127.9, "label": "+12h", "cone_radius_km": 55 },
+    { "lat": 12.8, "lon": 127.2, "label": "+24h", "cone_radius_km": 80 },
+    { "lat": 13.1, "lon": 126.5, "label": "+36h", "cone_radius_km": 105 },
+    { "lat": 13.5, "lon": 125.8, "label": "+48h", "cone_radius_km": 130 }
+  ]
+}
