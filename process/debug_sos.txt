@@ -1,0 +1,3 @@
+
+{"number":"639760560844","message":"SOS ALERT\nEmergency: Flood Rescue\n\nLocation: https://maps.google.com/?q=10.623185977086033,122.933365"}
+
