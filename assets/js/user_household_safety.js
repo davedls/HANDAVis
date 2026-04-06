@@ -659,7 +659,7 @@
       flood:{
         low:{status:"Monitor drains",priority:"Stay alert",note:"Watch for road ponding and keep essentials ready.",why:"Floodwater can rise fast in low-lying drainage corridors once rain bands repeat.",movement:"Prefer higher roads",summary:"Use elevated roads and avoid low crossings first."},
         moderate:{status:"Prepare to move",priority:"Raise essentials",note:"Move valuables higher and review your nearest safe route.",why:"Water can begin collecting in road dips and near river-adjacent communities.",movement:"Avoid flooded shortcuts",summary:"Choose main roads with better drainage and avoid shortcuts."},
-        high:{status:"Pre-evacuate",priority:"Ready go bag",note:"Pre-position medicines, IDs, and chargers now.",why:"High flood exposure can cut off low roads before a formal evacuation order.",movement:"Leave before roads worsen",summary:"Move early using the safest drivable route before water deepens."},
+        high:{status:"Pre-evacuate",priority:"Ready go bag",note:"Pre-position medicines, IDs, and chargers now.",why:"High flood exposure can cut off low roads before a formal evacuation order.",movement:"Leave before conditions worsen",summary:"Move early using the safest drivable route before water deepens."},
         critical:{status:"Evacuate now",priority:"Move immediately",note:"Relocate vulnerable family members first.",why:"Critical flood conditions can turn passable roads unsafe within minutes.",movement:"Do not cross water",summary:"Take the fastest dry route to the recommended support point now."}
       },
       fire:{
