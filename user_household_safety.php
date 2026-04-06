@@ -405,7 +405,7 @@ hv_require_login();
         <div class="loc-row">
           <span class="dot red"></span>
           <div class="pill-input-container">
-            <input type="text" placeholder="Find airports or centers..." id="centerSearchInput">
+            <input type="text" placeholder="Find evacuation centers..." id="centerSearchInput">
             <i class="fas fa-camera camera-icon"></i>
           </div>
           <button class="add-btn"><i class="fas fa-plus"></i></button>
@@ -422,7 +422,7 @@ hv_require_login();
                   <small id="routeTargetSub">Choose a scenario, then find a route.</small>
                 </div>
                 <div class="support-stat">
-                  <span>ETA</span>
+                  <span>Travel Time</span>
                   <strong id="routeEta">--</strong>
                   <small id="routeDistance">Distance will appear here.</small>
                 </div>
