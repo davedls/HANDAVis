@@ -1,4 +1,4 @@
-# HANDAVIS 
+# HANDAVIS ⛨
 
 ## Meaning and Vision
 
