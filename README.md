@@ -23,16 +23,16 @@ You can also create your own accounts as users.
 Accounts to access the different portals:
 
 Barangay:
-estefania@gmail.com 
-Barangay123
+- Email: estefania@gmail.com 
+- Password: Barangay123
 
 Responders:
-joel@gmail.com
-Responder123!
+- Email: joel@gmail.com
+- Password: Responder123!
 
 Admin:
-admin@handavis.local 
-Admin1234
+- Email: admin@handavis.local 
+- Password: Admin1234
 
 ---
 
