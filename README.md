@@ -2,7 +2,7 @@
 
 ## A Community-Based, Real-Time Emergency Response Platform for Western Visayas
 
-HANDAVis (HANDA + Visayas) is a *comprehensive, multi-portal emergency response system* designed to enhance disaster preparedness, response coordination, and public safety across *Western Visayas*. It integrates *real-time data, intelligent routing, AI-driven assistance, and community collaboration* into a single, unified platform.
+HANDAVis (HANDA + Visayas) is a *comprehensive, multi-portal emergency response system* designed to enhance disaster preparedness, response coordination, and public safety across Western Visayas. It integrates real-time tracking, live news updates, live weather forecasts, one-tap hazard reporting, SOS alerts, AI-powered assistance, smart evacuation routing, and community circle monitoring into a single, unified platform.
 
 The system is engineered to reduce response time, improve situational awareness, and empower both citizens and authorities to act quickly and effectively during emergencies.
 
