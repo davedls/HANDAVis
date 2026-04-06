@@ -21,28 +21,34 @@ function load_optional_config(): void
     }
     $loaded = true;
 
-    $file = __DIR__ . '/../includes/openai_config.php';
-    if (!is_file($file)) {
-        return;
-    }
+    $files = [
+        __DIR__ . '/../includes/openai_config.php',
+        __DIR__ . '/../includes/openai_config.local.php',
+    ];
 
-    $config = require $file;
-
-    if (isset($OPENAI_API_KEY) && is_string($OPENAI_API_KEY) && trim($OPENAI_API_KEY) !== '') {
-        $GLOBALS['OPENAI_API_KEY'] = trim($OPENAI_API_KEY);
-    }
-
-    if (isset($HANDAM_OPENAI_MODEL) && is_string($HANDAM_OPENAI_MODEL) && trim($HANDAM_OPENAI_MODEL) !== '') {
-        $GLOBALS['HANDAM_OPENAI_MODEL'] = trim($HANDAM_OPENAI_MODEL);
-    }
-
-    if (is_array($config)) {
-        if (!empty($config['api_key']) && is_string($config['api_key'])) {
-            $GLOBALS['OPENAI_API_KEY'] = trim($config['api_key']);
+    foreach ($files as $file) {
+        if (!is_file($file)) {
+            continue;
         }
 
-        if (!empty($config['model']) && is_string($config['model'])) {
-            $GLOBALS['HANDAM_OPENAI_MODEL'] = trim($config['model']);
+        $config = require $file;
+
+        if (isset($OPENAI_API_KEY) && is_string($OPENAI_API_KEY) && trim($OPENAI_API_KEY) !== '' && !is_placeholder_openai_key($OPENAI_API_KEY)) {
+            $GLOBALS['OPENAI_API_KEY'] = trim($OPENAI_API_KEY);
+        }
+
+        if (isset($HANDAM_OPENAI_MODEL) && is_string($HANDAM_OPENAI_MODEL) && trim($HANDAM_OPENAI_MODEL) !== '') {
+            $GLOBALS['HANDAM_OPENAI_MODEL'] = trim($HANDAM_OPENAI_MODEL);
+        }
+
+        if (is_array($config)) {
+            if (!empty($config['api_key']) && is_string($config['api_key']) && !is_placeholder_openai_key($config['api_key'])) {
+                $GLOBALS['OPENAI_API_KEY'] = trim($config['api_key']);
+            }
+
+            if (!empty($config['model']) && is_string($config['model'])) {
+                $GLOBALS['HANDAM_OPENAI_MODEL'] = trim($config['model']);
+            }
         }
     }
 }
@@ -546,7 +552,7 @@ if ($message === '') {
 $apiKey = get_openai_key();
 if (!$apiKey) {
     respond([
-        'error' => 'OpenAI API key is not configured on the server. Set OPENAI_API_KEY in the server environment or in the local gitignored includes/openai_config.php file.',
+        'error' => 'OpenAI API key is not configured on the server. Set OPENAI_API_KEY in the server environment or place the real key only in the local gitignored includes/openai_config.local.php file.',
     ], 500);
 }
 
