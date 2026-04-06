@@ -1,0 +1,4 @@
+# Keep server-side secrets out of source control
+includes/openai_config.php
+.env
+.env.*
