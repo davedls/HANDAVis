@@ -1,8 +1,8 @@
-# HANDAVIS 🚨
+# HANDAVis 🚨
 
 ## A Community-Based, Real-Time Emergency Response Platform for Western Visayas
 
-HANDAVIS is a *comprehensive, multi-portal emergency response system* designed to enhance disaster preparedness, response coordination, and public safety across *Western Visayas*. It integrates *real-time data, intelligent routing, AI-driven assistance, and community collaboration* into a single, unified platform.
+HANDAVis (HANDA + Visayas) is a *comprehensive, multi-portal emergency response system* designed to enhance disaster preparedness, response coordination, and public safety across *Western Visayas*. It integrates *real-time data, intelligent routing, AI-driven assistance, and community collaboration* into a single, unified platform.
 
 The system is engineered to reduce response time, improve situational awareness, and empower both citizens and authorities to act quickly and effectively during emergencies.
 
@@ -10,7 +10,7 @@ The system is engineered to reduce response time, improve situational awareness,
 
 ## 1. Objectives
 
-HANDAVIS aims to:
+HANDAVis aims to:
 
 * Provide *real-time situational awareness* during disasters
 * Enable *fast and reliable emergency communication*
@@ -22,7 +22,7 @@ HANDAVIS aims to:
 
 ## 2. System Architecture Overview
 
-HANDAVIS follows a *multi-role, web-based architecture* composed of four primary portals:
+HANDAVis follows a *multi-role, web-based architecture* composed of four primary portals:
 
 * User Portal
 * Barangay Staff Portal
@@ -193,7 +193,7 @@ Current emergency response systems face several challenges:
 
 ## 7. Proposed Solution
 
-HANDAVIS addresses these issues by:
+HANDAVis addresses these issues by:
 
 * Centralizing emergency data into one platform
 * Enabling real-time communication and updates
@@ -245,7 +245,7 @@ HANDAVIS addresses these issues by:
 
 ## 11. Deployment Guide (HelioHost)
 
-HANDAVIS is deployed using *HelioHost*, a free web hosting service that supports PHP and MySQL.
+HANDAVis is deployed using *HelioHost*, a free web hosting service that supports PHP and MySQL.
 
 ### Requirements
 
@@ -295,7 +295,7 @@ HANDAVIS is deployed using *HelioHost*, a free web hosting service that supports
 * Enable error reporting for debugging if needed
 * Some APIs (Maps, Weather, News) may require valid API keys
 
-HANDAVIS is designed to run on a live server environment, making it accessible anytime and anywhere.
+HANDAVis is designed to run on a live server environment, making it accessible anytime and anywhere.
 
 ---
 
@@ -311,7 +311,7 @@ HANDAVIS is designed to run on a live server environment, making it accessible a
 
 ## 13. Conclusion
 
-HANDAVIS represents a *modern, scalable, and community-driven approach* to emergency management. By integrating real-time systems, AI, and multi-role coordination, it provides a powerful tool for improving disaster response across Western Visayas.
+HANDAVis represents a *modern, scalable, and community-driven approach* to emergency management. By integrating real-time systems, AI, and multi-role coordination, it provides a powerful tool for improving disaster response across Western Visayas.
 
 "Empowering communities through real-time intelligence and connected response systems."
 
