@@ -253,12 +253,36 @@ function hv_is_near_western_visayas(array $coords): bool
     ];
 
     foreach ($referencePoints as $point) {
-        if (hv_distance_km($coords, $point) <= 220) {
+        if (hv_distance_km($coords, $point) <= 120) {
             return true;
         }
     }
 
     return false;
+}
+
+function hv_should_fetch_detail_for_western_visayas(array $record): bool
+{
+    $sourceUrl = (string) ($record['sourceUrl'] ?? '');
+    if ($sourceUrl !== '' && preg_match('/F\.html$/i', $sourceUrl)) {
+        return true;
+    }
+
+    $summaryText = implode(' ', array_filter([
+        (string) ($record['area'] ?? ''),
+        (string) ($record['epicenter'] ?? ''),
+    ]));
+
+    if (hv_mentions_western_visayas($summaryText)) {
+        return true;
+    }
+
+    $coords = $record['coords'] ?? null;
+    return is_array($coords)
+        && count($coords) === 2
+        && is_finite((float) $coords[0])
+        && is_finite((float) $coords[1])
+        && hv_is_near_western_visayas([(float) $coords[0], (float) $coords[1]]);
 }
 
 function hv_is_western_visayas_relevant(array $record): bool
@@ -426,13 +450,11 @@ if (!$forceRefresh && is_file($cacheFile) && (time() - (int) filemtime($cacheFil
 try {
     $homepageHtml = hv_fetch_remote_html('https://earthquake.phivolcs.dost.gov.ph/');
     $records = hv_parse_homepage_rows($homepageHtml, 250);
-    $records = array_values(array_filter($records, static function (array $record): bool {
-        return hv_is_western_visayas_relevant($record) || ((float) ($record['magnitudeValue'] ?? 0) >= 4.5);
-    }));
+    $records = array_values(array_filter($records, 'hv_should_fetch_detail_for_western_visayas'));
     usort($records, static function (array $a, array $b): int {
         return (int) ($b['timestamp'] ?? 0) <=> (int) ($a['timestamp'] ?? 0);
     });
-    $records = array_slice($records, 0, max($limit, 12));
+    $records = array_slice($records, 0, max($limit * 4, 24));
 
     foreach ($records as &$record) {
         if (($record['sourceUrl'] ?? '') === '') {
