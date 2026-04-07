@@ -62,6 +62,7 @@
   var COORD_RESOLVE_CONCURRENCY = 8;
   var WEATHER_PROXY_URL = "process/weather_proxy.php";
   var WEATHER_REALTIME_PROXY_URL = "process/weather_realtime.php";
+  var PHIVOLCS_EARTHQUAKE_FEED_URL = "process/phivolcs_earthquake_feed.php";
   var WEATHER_CLIENT_CACHE_KEY = "handavisWeatherClientCacheV2";
   var WEATHER_CLICK_COOLDOWN_MS = 1800;
   var lastWeatherClickAtByPlace = {};
@@ -247,6 +248,7 @@
 
   async function searchSafetyCircleUsers() {
     var input = document.getElementById("circleMemberSearchInput");
+    var searchBtn = document.getElementById("circleSearchMemberBtn");
     var query = input ? input.value.trim() : "";
 
     if (query.length < 2) {
@@ -254,10 +256,18 @@
       safetyCircleState.memberSearchBusy = false;
       safetyCircleState.memberSearchMessage = "Type at least 2 characters to search for someone.";
       renderSafetyCircleMemberSearchResults();
+      if (searchBtn) {
+        searchBtn.disabled = false;
+        searchBtn.textContent = "Search";
+      }
       return;
     }
 
     safetyCircleState.memberSearchBusy = true;
+    if (searchBtn) {
+      searchBtn.disabled = true;
+      searchBtn.textContent = "Searching...";
+    }
     renderSafetyCircleMemberSearchResults();
 
     try {
@@ -272,10 +282,14 @@
       safetyCircleState.memberSearchResults = [];
       safetyCircleState.memberSearchMessage = "Could not search users right now.";
       showToast("Could not search Safety Circle users.");
+    } finally {
+      safetyCircleState.memberSearchBusy = false;
+      if (searchBtn) {
+        searchBtn.disabled = false;
+        searchBtn.textContent = "Search";
+      }
+      renderSafetyCircleMemberSearchResults();
     }
-
-    safetyCircleState.memberSearchBusy = false;
-    renderSafetyCircleMemberSearchResults();
   }
 
   async function addMemberToSafetyCircle(memberUserId, memberName) {
@@ -365,12 +379,21 @@
   async function saveCurrentLocationAsCirclePlace() {
     var labelInput = document.getElementById("circlePlaceLabelInput");
     var radiusInput = document.getElementById("circlePlaceRadiusInput");
+    var saveBtn = document.getElementById("circleSavePlaceBtn");
     var label = labelInput ? labelInput.value.trim() : "";
     var radiusMeters = radiusInput ? Number(radiusInput.value) || 250 : 250;
+    radiusMeters = Math.max(100, Math.min(2000, radiusMeters));
+    if (radiusInput) radiusInput.value = String(radiusMeters);
 
     if (!label) {
+      if (labelInput) labelInput.focus();
       showToast("Enter a place label first.");
       return;
+    }
+
+    if (saveBtn) {
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Saving...";
     }
 
     var coords = safetyCircleState.userCoords;
@@ -381,6 +404,10 @@
     } catch (err) {}
 
     if (!Array.isArray(coords) || coords.length !== 2) {
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Save Current Place";
+      }
       showToast("Current location is required to save a place.");
       return;
     }
@@ -397,6 +424,11 @@
       showToast(label + " saved for arrival and departure alerts.");
     } catch (err) {
       showToast(err && err.message ? err.message : "Could not save that place right now.");
+    } finally {
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Save Current Place";
+      }
     }
   }
 
@@ -2261,6 +2293,7 @@
   var westernVisayasDataset = null;
   var selectedBarangayMarker = null;
   var evacuationCenterLoadPromise = null;
+  var phivolcsEarthquakeLoadPromise = null;
   var circleAlertPollTimer = null;
   var lastSeenCircleAlertId = Number(localStorage.getItem("handavisLastSeenCircleAlertId") || "0") || 0;
   var buildWesternVisayasPlacesFromWeatherApi = buildWesternVisayasPlaces;
@@ -2330,6 +2363,8 @@
       '.hv-user-pin{background:linear-gradient(135deg,#7ce8ff,#3b82f6);}',
       '.hv-place-weather-icon-wrap{background:transparent;border:0;}',
       '.hv-place-weather-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid rgba(255,255,255,.78);background:rgba(10,28,50,.74);box-shadow:0 10px 20px rgba(0,0,0,.28);overflow:hidden;}',
+      'body.light-mode .hv-place-weather-icon{background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(239,246,255,.96));border-color:rgba(86,122,165,.24);box-shadow:0 10px 22px rgba(61,92,133,.16);}',
+      'body.light-mode .hv-place-weather-icon svg{color:#2b6ea7;}',
       'body.light-mode .hv-map-directory{background:rgba(252,254,255,.95);color:#163149;border-color:rgba(54,99,145,.14);box-shadow:0 16px 30px rgba(33,53,79,.12);}',
       'body.light-mode .hv-map-directory h4{color:#163149;}',
       'body.light-mode .hv-map-directory p,body.light-mode .hv-map-directory .hv-dir-meta{color:#5e7086;}',
@@ -2987,6 +3022,18 @@
       if (report.affectedAreas) rows.push('Affected Areas: ' + escapeHtml(report.affectedAreas));
     }
 
+    if (report.type === 'earthquake') {
+      if (report.reportedAt) rows.push('Time: ' + escapeHtml(report.reportedAt));
+      if (report.epicenter) rows.push('Epicenter: ' + escapeHtml(report.epicenter));
+      if (report.depth) rows.push('Depth: ' + escapeHtml(report.depth));
+      if (report.magnitude) rows.push('Magnitude: ' + escapeHtml(report.magnitude));
+      rows.push('Intensity: ' + escapeHtml(report.intensity || 'Not stated'));
+      rows.push('Tsunami: ' + escapeHtml(report.tsunami || 'No'));
+      if (report.origin) rows.push('Origin: ' + escapeHtml(report.origin));
+      if (report.source) rows.push('Source: ' + escapeHtml(report.source));
+      if (report.sourceUrl) rows.push('<a href="' + escapeHtml(report.sourceUrl) + '" target="_blank" rel="noopener">View PHIVOLCS bulletin</a>');
+    }
+
     if (report.note) {
       rows.push('Note: ' + escapeHtml(report.note));
     }
@@ -3077,6 +3124,68 @@
     return evacuationCenterLoadPromise;
   }
 
+  async function loadPhivolcsEarthquakes(forceRefresh) {
+    if (phivolcsEarthquakeLoadPromise && !forceRefresh) {
+      return phivolcsEarthquakeLoadPromise;
+    }
+
+    phivolcsEarthquakeLoadPromise = fetch(PHIVOLCS_EARTHQUAKE_FEED_URL + '?limit=10&t=' + Date.now(), { cache: 'no-store' })
+      .then(function (response) {
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        return response.json();
+      })
+      .then(function (payload) {
+        if (!payload || !payload.ok || !Array.isArray(payload.earthquakes)) {
+          throw new Error(payload && payload.message ? payload.message : 'Could not load PHIVOLCS earthquake records.');
+        }
+
+        var earthquakeReports = payload.earthquakes
+          .map(function (quake, index) {
+            var coords = Array.isArray(quake.coords) ? quake.coords : [Number(quake.lat), Number(quake.lng)];
+            return {
+              id: quake.id || ('phivolcs-eq-' + index),
+              type: 'earthquake',
+              name: quake.name || 'PHIVOLCS Earthquake',
+              area: quake.area || quake.epicenter || 'Philippines',
+              coords: coords,
+              severity: quake.severity || 'Monitor',
+              reportedAt: quake.reportedAt || '',
+              epicenter: quake.epicenter || quake.area || '',
+              depth: quake.depth || '',
+              magnitude: quake.magnitude || '',
+              intensity: quake.intensity || 'Not stated',
+              tsunami: quake.tsunami || 'No',
+              origin: quake.origin || '',
+              note: quake.note || 'Synced from PHIVOLCS latest earthquake bulletin.',
+              source: quake.source || 'PHIVOLCS',
+              sourceUrl: quake.sourceUrl || ''
+            };
+          })
+          .filter(function (quake) {
+            return Array.isArray(quake.coords) && isFinite(Number(quake.coords[0])) && isFinite(Number(quake.coords[1]));
+          });
+
+        HAZARD_REPORTS = HAZARD_REPORTS.filter(function (report) {
+          return report.type !== 'earthquake';
+        }).concat(earthquakeReports);
+
+        renderHazardMarkers();
+        if (forceRefresh) {
+          showToast('Earthquake markers synced from PHIVOLCS.');
+        }
+        return earthquakeReports;
+      })
+      .catch(function () {
+        renderHazardMarkers();
+        if (forceRefresh) {
+          showToast('Using the current earthquake markers for now.');
+        }
+        return HAZARD_REPORTS.filter(function (report) { return report.type === 'earthquake'; });
+      });
+
+    return phivolcsEarthquakeLoadPromise;
+  }
+
   function renderHazardMarkers() {
     ensureHazardMarkerLayer();
     clearHazardMarkers();
@@ -3165,7 +3274,10 @@
     }
     updatePlaceMarkerScale();
     renderHazardMarkers();
-    await loadEvacuationCenters(true);
+    await Promise.all([
+      loadEvacuationCenters(true),
+      loadPhivolcsEarthquakes(true)
+    ]);
     if (typeof window.refreshRainRadarOverlay === 'function') {
       window.refreshRainRadarOverlay();
     }
@@ -3641,6 +3753,7 @@
     ensureHazardMarkerLayer();
     renderHazardMarkers();
     loadEvacuationCenters(false);
+    loadPhivolcsEarthquakes(false);
     addWesternVisayasPlaceMarkers();
 
     map.on("click", function (event) {
@@ -3718,6 +3831,25 @@
       });
     }
 
+    var circleRelationInput = document.getElementById("circleMemberRelationInput");
+    if (circleRelationInput) {
+      circleRelationInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          if (Array.isArray(safetyCircleState.memberSearchResults) && safetyCircleState.memberSearchResults.length) {
+            var firstAvailable = safetyCircleState.memberSearchResults.find(function (entry) {
+              return !entry.is_connected;
+            });
+            if (firstAvailable) {
+              addMemberToSafetyCircle(firstAvailable.user_id, firstAvailable.name || "User");
+              return;
+            }
+          }
+          searchSafetyCircleUsers();
+        }
+      });
+    }
+
     var circleSavePlaceBtn = document.getElementById("circleSavePlaceBtn");
     if (circleSavePlaceBtn) {
       circleSavePlaceBtn.addEventListener("click", saveCurrentLocationAsCirclePlace);
@@ -3726,6 +3858,16 @@
     var circlePlaceLabelInput = document.getElementById("circlePlaceLabelInput");
     if (circlePlaceLabelInput) {
       circlePlaceLabelInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          saveCurrentLocationAsCirclePlace();
+        }
+      });
+    }
+
+    var circlePlaceRadiusInput = document.getElementById("circlePlaceRadiusInput");
+    if (circlePlaceRadiusInput) {
+      circlePlaceRadiusInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
           event.preventDefault();
           saveCurrentLocationAsCirclePlace();
