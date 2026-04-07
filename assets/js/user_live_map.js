@@ -2363,6 +2363,15 @@
       '.hv-user-pin{background:linear-gradient(135deg,#7ce8ff,#3b82f6);}',
       '.hv-place-weather-icon-wrap{background:transparent;border:0;}',
       '.hv-place-weather-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid rgba(255,255,255,.78);background:rgba(10,28,50,.74);box-shadow:0 10px 20px rgba(0,0,0,.28);overflow:hidden;}',
+      '.hv-eq-popup{min-width:min(290px,72vw);display:grid;gap:7px;}',
+      '.hv-eq-popup-time{text-align:center;font-weight:900;color:#f8fcff;font-size:.84rem;padding-bottom:6px;border-bottom:1px solid rgba(159,216,255,.18);}',
+      '.hv-eq-popup-line{font-size:.78rem;line-height:1.5;color:#e7f3ff;}',
+      '.hv-eq-popup-line strong{color:#9fd8ff;font-weight:800;}',
+      '.hv-eq-popup-note{font-size:.77rem;line-height:1.5;color:#dcecff;}',
+      '.hv-eq-badge{display:inline-flex;align-items:center;justify-content:center;padding:3px 8px;border-radius:999px;font-size:.72rem;font-weight:900;color:#071521;vertical-align:middle;}',
+      '.hv-eq-badge.mag-low{background:#93c5fd;}.hv-eq-badge.mag-moderate{background:#fde68a;}.hv-eq-badge.mag-high{background:#fdba74;}.hv-eq-badge.mag-critical{background:#fca5a5;}',
+      '.hv-eq-badge.int-low{background:#bfdbfe;}.hv-eq-badge.int-moderate{background:#fde68a;}.hv-eq-badge.int-high{background:#fdba74;}.hv-eq-badge.int-critical{background:#fca5a5;}',
+      '.hv-eq-inline-sep{opacity:.75;margin:0 5px;}',
       'body.light-mode .hv-place-weather-icon{background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(239,246,255,.96));border-color:rgba(86,122,165,.24);box-shadow:0 10px 22px rgba(61,92,133,.16);}',
       'body.light-mode .hv-place-weather-icon svg{color:#2b6ea7;}',
       'body.light-mode .hv-map-directory{background:rgba(252,254,255,.95);color:#163149;border-color:rgba(54,99,145,.14);box-shadow:0 16px 30px rgba(33,53,79,.12);}',
@@ -3003,7 +3012,76 @@
     return type;
   }
 
+  function getEarthquakeMagnitudeClass(value) {
+    var amount = Number(value);
+    if (!isFinite(amount)) return 'mag-low';
+    if (amount >= 6) return 'mag-critical';
+    if (amount >= 5) return 'mag-high';
+    if (amount >= 4) return 'mag-moderate';
+    return 'mag-low';
+  }
+
+  function getEarthquakeIntensityValue(value) {
+    var roman = String(value || '').toUpperCase().trim();
+    var map = { I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8, IX: 9, X: 10 };
+    return map[roman] || 0;
+  }
+
+  function getEarthquakeIntensityClass(value) {
+    var amount = getEarthquakeIntensityValue(value);
+    if (amount >= 7) return 'int-critical';
+    if (amount >= 5) return 'int-high';
+    if (amount >= 3) return 'int-moderate';
+    return 'int-low';
+  }
+
+  function getEarthquakeBadgeHtml(label, className) {
+    return '<span class="hv-eq-badge ' + className + '">' + escapeHtml(label) + '</span>';
+  }
+
+  function getEarthquakeImpactMessage(report) {
+    var damageExpected = !!report.damageExpected;
+    var aftershocksExpected = !!report.aftershocksExpected;
+    if (damageExpected && aftershocksExpected) return 'Damage and aftershocks are expected.';
+    if (damageExpected) return 'Damage is expected.';
+    if (aftershocksExpected) return 'Aftershocks are expected.';
+    return '';
+  }
+
+  function getEarthquakeTsunamiMessage(report) {
+    var tsunamiFlag = String(report.tsunami || 'No').toLowerCase();
+    if (tsunamiFlag === 'yes') {
+      if (report.tsunamiHeight) {
+        return 'Tsunamis reaching ' + String(report.tsunamiHeight) + ' are expected to hit.';
+      }
+      return 'Tsunamis are expected to hit.';
+    }
+    return 'There is no tsunami warning due to this earthquake.';
+  }
+
   function getHazardPopupHtml(report) {
+    if (report.type === 'earthquake') {
+      var magnitudeValue = isFinite(Number(report.magnitudeValue)) ? Number(report.magnitudeValue) : NaN;
+      var highestIntensity = report.highestIntensity || report.intensity || 'Not stated';
+      var impactMessage = getEarthquakeImpactMessage(report);
+      var tsunamiMessage = getEarthquakeTsunamiMessage(report);
+      var eqRows = [
+        '<div class="hv-eq-popup">',
+        '<div class="hv-eq-popup-time">' + escapeHtml(report.reportedAt || 'Recent PHIVOLCS bulletin') + '</div>',
+        '<div class="hv-eq-popup-line"><strong>Epicenter</strong><br>' + escapeHtml(report.epicenter || report.area || 'Not stated') + '</div>',
+        '<div class="hv-eq-popup-line"><strong>Depth</strong><br>' + escapeHtml(report.depth || 'Not stated') + '</div>',
+        '<div class="hv-eq-popup-line"><strong>Magnitude:</strong> ' + getEarthquakeBadgeHtml(report.magnitude || 'Not stated', getEarthquakeMagnitudeClass(magnitudeValue)) + '<span class="hv-eq-inline-sep">|</span><strong>Intensity</strong> ' + getEarthquakeBadgeHtml(highestIntensity, getEarthquakeIntensityClass(highestIntensity)) + '</div>'
+      ];
+
+      if (impactMessage) {
+        eqRows.push('<div class="hv-eq-popup-note">' + escapeHtml(impactMessage) + '</div>');
+      }
+
+      eqRows.push('<div class="hv-eq-popup-note">' + escapeHtml(tsunamiMessage) + '</div>');
+      eqRows.push('</div>');
+      return eqRows.join('');
+    }
+
     var rows = [
       '<strong>' + escapeHtml(report.name || 'Hazard') + '</strong>',
       escapeHtml(report.area || 'Affected area'),
@@ -3020,18 +3098,6 @@
       if (report.alertLevel) rows.push('Fire Alarm Level: ' + escapeHtml(report.alertLevel));
       if (report.affectedRange) rows.push('Fire Range: ' + escapeHtml(report.affectedRange));
       if (report.affectedAreas) rows.push('Affected Areas: ' + escapeHtml(report.affectedAreas));
-    }
-
-    if (report.type === 'earthquake') {
-      if (report.reportedAt) rows.push('Time: ' + escapeHtml(report.reportedAt));
-      if (report.epicenter) rows.push('Epicenter: ' + escapeHtml(report.epicenter));
-      if (report.depth) rows.push('Depth: ' + escapeHtml(report.depth));
-      if (report.magnitude) rows.push('Magnitude: ' + escapeHtml(report.magnitude));
-      rows.push('Intensity: ' + escapeHtml(report.intensity || 'Not stated'));
-      rows.push('Tsunami: ' + escapeHtml(report.tsunami || 'No'));
-      if (report.origin) rows.push('Origin: ' + escapeHtml(report.origin));
-      if (report.source) rows.push('Source: ' + escapeHtml(report.source));
-      if (report.sourceUrl) rows.push('<a href="' + escapeHtml(report.sourceUrl) + '" target="_blank" rel="noopener">View PHIVOLCS bulletin</a>');
     }
 
     if (report.note) {
@@ -3129,7 +3195,7 @@
       return phivolcsEarthquakeLoadPromise;
     }
 
-    phivolcsEarthquakeLoadPromise = fetch(PHIVOLCS_EARTHQUAKE_FEED_URL + '?limit=10&t=' + Date.now(), { cache: 'no-store' })
+    phivolcsEarthquakeLoadPromise = fetch(PHIVOLCS_EARTHQUAKE_FEED_URL + '?limit=30&t=' + Date.now(), { cache: 'no-store' })
       .then(function (response) {
         if (!response.ok) throw new Error('HTTP ' + response.status);
         return response.json();
@@ -3153,10 +3219,16 @@
               epicenter: quake.epicenter || quake.area || '',
               depth: quake.depth || '',
               magnitude: quake.magnitude || '',
+              magnitudeValue: quake.magnitudeValue,
               intensity: quake.intensity || 'Not stated',
+              highestIntensity: quake.highestIntensity || quake.intensity || 'Not stated',
+              intensityValue: quake.intensityValue || 0,
+              damageExpected: !!quake.damageExpected,
+              aftershocksExpected: !!quake.aftershocksExpected,
               tsunami: quake.tsunami || 'No',
+              tsunamiHeight: quake.tsunamiHeight || null,
               origin: quake.origin || '',
-              note: quake.note || 'Synced from PHIVOLCS latest earthquake bulletin.',
+              note: quake.note || '',
               source: quake.source || 'PHIVOLCS',
               sourceUrl: quake.sourceUrl || ''
             };
