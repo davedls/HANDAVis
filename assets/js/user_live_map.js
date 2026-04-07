@@ -3003,7 +3003,121 @@
     return type;
   }
 
+  function parseEarthquakeMagnitudeValue(value) {
+    var match = String(value || '').match(/(\d+(?:\.\d+)?)/);
+    return match ? Number(match[1]) : NaN;
+  }
+
+  function getEarthquakeMagnitudeColor(value) {
+    if (!isFinite(value)) return '#cbd5e1';
+    if (value < 2) return '#94a3b8';
+    if (value < 4) return '#22c55e';
+    if (value < 5) return '#eab308';
+    if (value < 6) return '#f97316';
+    if (value < 7) return '#ef4444';
+    if (value < 8) return '#a855f7';
+    return '#7c3aed';
+  }
+
+  function getEarthquakeIntensityNumber(report) {
+    var numeric = Number(report && report.intensityValue);
+    if (isFinite(numeric) && numeric > 0) return numeric;
+
+    var romanMap = { I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8, IX: 9, X: 10 };
+    var label = String((report && report.highestIntensity) || (report && report.intensity) || '').toUpperCase();
+    var match = label.match(/\b(VIII|VII|VI|IV|III|II|IX|X|V|I)\b/);
+    return match && romanMap[match[1]] ? romanMap[match[1]] : 0;
+  }
+
+  function getEarthquakeIntensityLabel(report) {
+    var highest = String(report && report.highestIntensity ? report.highestIntensity : '').trim();
+    if (highest && highest !== 'Not stated') return highest;
+
+    var intensityText = String(report && report.intensity ? report.intensity : '').trim();
+    if (!intensityText || /aftershock/i.test(intensityText)) return 'Not stated';
+
+    var match = intensityText.match(/\b(VIII|VII|VI|IV|III|II|IX|X|V|I)\b/i);
+    return match ? match[1].toUpperCase() : intensityText;
+  }
+
+  function getEarthquakeIntensityColor(report) {
+    var level = getEarthquakeIntensityNumber(report);
+    if (!level) return '#cbd5e1';
+    if (level <= 2) return '#22c55e';
+    if (level === 3) return '#84cc16';
+    if (level === 4) return '#eab308';
+    if (level === 5) return '#f97316';
+    if (level === 6) return '#ef4444';
+    if (level === 7) return '#dc2626';
+    if (level === 8) return '#b91c1c';
+    if (level === 9) return '#7c3aed';
+    return '#581c87';
+  }
+
+  function getEarthquakeAftershockNote(report) {
+    var candidates = [report && report.note, report && report.intensity];
+    for (var i = 0; i < candidates.length; i += 1) {
+      var text = String(candidates[i] || '').trim();
+      if (text && /aftershock/i.test(text)) {
+        return text;
+      }
+    }
+    return '';
+  }
+
+  function getEarthquakeExpectationMessage(report) {
+    var damage = !!(report && report.damageExpected);
+    var aftershocks = !!(report && report.aftershocksExpected);
+    if (damage && aftershocks) return 'Damage and aftershocks are expected.';
+    if (damage) return 'Damage is expected.';
+    if (aftershocks) return 'Aftershocks are expected.';
+    return '';
+  }
+
+  function getEarthquakeTsunamiMessage(report) {
+    var tsunamiValue = String((report && report.tsunami) || 'No');
+    if (/yes|warning|advisory/i.test(tsunamiValue)) {
+      var height = String((report && report.tsunamiHeight) || '').trim();
+      if (height) {
+        return 'Run to higher ground! Tsunami waves reaching up to ' + height + ' are expected to hit the coast.';
+      }
+      return 'Run to higher ground! Tsunami waves are expected to hit the coast.';
+    }
+    return 'There is no tsunami warning in effect for this earthquake.';
+  }
+
+  function getEarthquakePopupHtml(report) {
+    var magnitudeText = String(report && report.magnitude ? report.magnitude : 'Not stated');
+    var magnitudeValue = parseEarthquakeMagnitudeValue(magnitudeText);
+    var magnitudeColor = getEarthquakeMagnitudeColor(magnitudeValue);
+    var intensityLabel = getEarthquakeIntensityLabel(report);
+    var intensityColor = getEarthquakeIntensityColor(report);
+    var aftershockNote = getEarthquakeAftershockNote(report);
+    var expectationMessage = getEarthquakeExpectationMessage(report);
+    var tsunamiMessage = getEarthquakeTsunamiMessage(report);
+    var tsunamiAlert = /Run to higher ground!/i.test(tsunamiMessage);
+
+    return '' +
+      '<div class="hv-earthquake-popup" style="min-width:250px;line-height:1.55;">' +
+        '<div style="text-align:center;font-weight:900;font-size:.96rem;margin-bottom:8px;">' + escapeHtml(report && report.reportedAt ? report.reportedAt : 'Unavailable') + '</div>' +
+        '<div style="margin-bottom:6px;"><strong>Location:</strong> ' + escapeHtml(report && report.area ? report.area : 'Philippines') + '</div>' +
+        '<div style="margin-bottom:8px;"><strong>Depth:</strong> ' + escapeHtml(report && report.depth ? report.depth : 'Not stated') + '</div>' +
+        '<div style="text-align:center;font-weight:900;margin:10px 0 8px;">' +
+          'Magnitude: <span style="font-weight:900;color:' + magnitudeColor + ';">' + escapeHtml(magnitudeText) + '</span>' +
+          ' | Intensity: <span style="font-weight:900;color:' + intensityColor + ';">' + escapeHtml(intensityLabel) + '</span>' +
+        '</div>' +
+        (aftershockNote ? '<div style="text-align:center;margin:6px 0 8px;"><strong>' + escapeHtml(aftershockNote) + '</strong></div>' : '') +
+        (expectationMessage ? '<div style="text-align:center;font-weight:900;margin:8px 0;">' + escapeHtml(expectationMessage) + '</div>' : '') +
+        '<div style="text-align:center;font-weight:900;margin:8px 0;color:' + (tsunamiAlert ? '#dc2626' : '#2563eb') + ';">' + escapeHtml(tsunamiMessage) + '</div>' +
+        (report && report.sourceUrl ? '<div style="text-align:center;margin-top:8px;"><a href="' + escapeHtml(report.sourceUrl) + '" target="_blank" rel="noopener">View PHIVOLCS bulletin</a></div>' : '') +
+      '</div>';
+  }
+
   function getHazardPopupHtml(report) {
+    if (report.type === 'earthquake') {
+      return getEarthquakePopupHtml(report);
+    }
+
     var rows = [
       '<strong>' + escapeHtml(report.name || 'Hazard') + '</strong>',
       escapeHtml(report.area || 'Affected area'),
@@ -3020,18 +3134,6 @@
       if (report.alertLevel) rows.push('Fire Alarm Level: ' + escapeHtml(report.alertLevel));
       if (report.affectedRange) rows.push('Fire Range: ' + escapeHtml(report.affectedRange));
       if (report.affectedAreas) rows.push('Affected Areas: ' + escapeHtml(report.affectedAreas));
-    }
-
-    if (report.type === 'earthquake') {
-      if (report.reportedAt) rows.push('Time: ' + escapeHtml(report.reportedAt));
-      if (report.epicenter) rows.push('Epicenter: ' + escapeHtml(report.epicenter));
-      if (report.depth) rows.push('Depth: ' + escapeHtml(report.depth));
-      if (report.magnitude) rows.push('Magnitude: ' + escapeHtml(report.magnitude));
-      rows.push('Intensity: ' + escapeHtml(report.intensity || 'Not stated'));
-      rows.push('Tsunami: ' + escapeHtml(report.tsunami || 'No'));
-      if (report.origin) rows.push('Origin: ' + escapeHtml(report.origin));
-      if (report.source) rows.push('Source: ' + escapeHtml(report.source));
-      if (report.sourceUrl) rows.push('<a href="' + escapeHtml(report.sourceUrl) + '" target="_blank" rel="noopener">View PHIVOLCS bulletin</a>');
     }
 
     if (report.note) {
@@ -3154,7 +3256,12 @@
               depth: quake.depth || '',
               magnitude: quake.magnitude || '',
               intensity: quake.intensity || 'Not stated',
+              highestIntensity: quake.highestIntensity || quake.intensity || 'Not stated',
+              intensityValue: Number(quake.intensityValue) || 0,
+              damageExpected: !!quake.damageExpected,
+              aftershocksExpected: !!quake.aftershocksExpected,
               tsunami: quake.tsunami || 'No',
+              tsunamiHeight: quake.tsunamiHeight || '',
               origin: quake.origin || '',
               note: quake.note || 'Synced from PHIVOLCS latest earthquake bulletin.',
               source: quake.source || 'PHIVOLCS',
